@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote for Your Candidate - IT For Youth Ghana</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/vote-candidate.css">
+</head>
+<body>
+<div id="background-overlay"></div>
+<header>
+    <nav>
+        <div class="logo">
+            <img src="/images/Asset-1.png" alt="IT For Youth Ghana Logo">
+            <span>IT For Youth Ghana</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html#events">Events</a></li>
+            <li><a href="index.html#categories">Categories</a></li>
+            <li><a href="#" class="active">Vote</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div id="event-info" class="event-info">
+        <h1 id="event-name"></h1>
+    </div>
+    <h2>Cast Your Vote</h2>
+    <div id="candidate-info" class="candidate-info">
+        <img id="candidate-image" src="/placeholder.svg" alt="Candidate" class="candidate-image">
+        <h3 id="candidate-name" class="candidate-name"></h3>
+        <p id="candidate-description" class="candidate-description"></p>
+    </div>
+    <form id="vote-form" class="vote-form">
+        <div class="form-group">
+            <label for="category-select">Select Category:</label>
+            <select id="category-select" required>
+                <option value="">Choose a category</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="vote-count">Number of Votes:</label>
+            <input type="number" id="vote-count" min="1" required>
+        </div>
+        <button type="submit" id="vote-button" class="vote-button" disabled>Vote</button>
+    </form>
+</main>
+
+<footer>
+    <p>&copy; 2024 IT For Youth Ghana. All rights reserved.</p>
+</footer>
+
+<div id="vote-modal" class="modal">
+    <div class="modal-content">
+        <h2>Confirm Your Vote</h2>
+        <p>Are you sure you want to cast <span id="vote-count-confirm"></span> vote(s) for <span id="candidate-name-confirm"></span> in the <span id="category-name-confirm"></span> category?</p>
+        <div class="modal-buttons">
+            <button id="confirm-vote" class="btn btn-primary">Confirm Vote</button>
+            <button id="cancel-vote" class="btn btn-secondary">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+<script src="../js/vote.js"></script>
+</body>
+</html>
+

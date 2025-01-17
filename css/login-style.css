@@ -1,0 +1,162 @@
+:root {
+    --primary-blue: #0056A4;
+    --primary-red: #D2232A;
+    --light-blue: #E8F3FC;
+    --white: #FFFFFF;
+    --gray: #F0F0F0;
+    --dark-gray: #4A4A4A;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(rgba(44, 124, 216, 0.5), rgba(44, 124, 216, 0.5)), url(../images/FB_IMG_17359007898946991.jpg);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    background-color: var(--light-blue);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 800px;
+    overflow: hidden;
+}
+
+.login-box {
+    flex: 1;
+    padding: 2rem;
+}
+
+.cultural-symbols {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+}
+
+.adinkra-symbol {
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    cursor: help;
+}
+
+/* Placeholder images for Adinkra symbols */
+.adinkra-symbol:nth-child(1) {
+    background-image: url('../images/Asset-1.png');
+}
+
+.adinkra-symbol:nth-child(2) {
+    background-image: url('../images/Asset-1.png');
+}
+
+.adinkra-symbol:nth-child(3) {
+    background-image: url('../images/Asset-1.png');
+}
+
+h1 {
+    color: var(--primary-blue);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.coding-joke {
+    background-color: var(--primary-blue);
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.punchline {
+    font-weight: bold;
+    color: var(--white);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--dark-gray);
+}
+
+input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+button {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary-red);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #a50e1f;
+}
+
+.progress-bar {
+    height: 4px;
+    background-color: #e0e0e0;
+    margin-top: 1rem;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    width: 0;
+    background-color: var(--primary-red);
+    transition: width 0.3s ease;
+}
+
+.status-message {
+    margin-top: 1rem;
+    text-align: center;
+    font-weight: bold;
+}
+
+.status-message.success {
+    color: var(--primary-blue);
+}
+
+.status-message.error {
+    color: var(--white);
+}
+
+.computing-image {
+    flex: 1;
+    background-image: url('../images/Asset-1.png');
+    background-size: cover;
+    background-position: center;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .computing-image {
+        height: 200px;
+    }
+}

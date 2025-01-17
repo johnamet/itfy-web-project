@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Analytics</title>
+    <link rel="stylesheet" href="../css/analysis.css">
+    <link rel="shortcut icon" href="../images/Asset-1.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="header">
+            <div class="logo">
+                <img src="../images/Asset-1.png" alt="IT FOR Youth Ghana Logo">
+                <span>IT FOR Youth Ghana</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="header-actions">
+                <div class="notifications">
+                    <span class="notification-icon">🔔</span>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="user-profile">
+                    <img src="../images/FB_IMG_17359007898946991.jpg" alt="Admin Avatar" class="avatar">
+                    <span class="username">Admin User</span>
+                </div>
+            </div>
+        </header>
+
+        <nav class="sidebar">
+            <ul>
+                <li><a href="../pages/dashboard.html"><span class="icon">📊</span> Dashboard Overview</a></li>
+                <li><a href="../pages/events.html"><span class="icon">📅</span> Manage Events</a></li>
+                <li><a href="../pages/manageCandidates.html"><span class="icon">👥</span> Manage Candidates</a></li>
+                <li><a href="../pages/users.html"><span class="icon">👤</span> Manage Users</a></li>
+                <li class="active"><a href="../pages/analysis.html"><span class="icon">📈</span> Analytics</a></li>
+                <li><a href="../pages/settings.html"><span class="icon">⚙️</span> Settings</a></li>
+                <li><a href="../pages/support.html"><span class="icon">💬</span> Support</a></li>
+            </ul>
+        </nav>
+
+        <section id="analytics" class="analytics-page">
+            <h1>Analytics</h1>
+            <div class="analytics-summary">
+                <div class="stat-card">
+                    <h3>Total Votes</h3>
+                    <p class="stat-number">12,345</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Active Events</h3>
+                    <p class="stat-number">8</p>
+                </div>
+                <div class="stat-card">
+                    <h3>Most Voted Candidate</h3>
+                    <p class="stat-number">John Doe</p>
+                </div>
+                <div class="stat-card">
+                    <h3>New Users This Month</h3>
+                    <p class="stat-number">321</p>
+                </div>
+            </div>
+        
+            <div class="charts-container">
+                <div class="chart">
+                    <h2>Voting Trends</h2>
+                    <canvas id="votingTrendsChart"></canvas>
+                </div>
+                <div class="chart">
+                    <h2>Top Candidates</h2>
+                    <canvas id="topCandidatesChart"></canvas>
+                </div>
+            </div>
+        
+            <div class="table-container">
+                <h2>Event Participation</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Event Name</th>
+                            <th>Total Votes</th>
+                            <th>Active Participants</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Best Mobile App 2023</td>
+                            <td>5,678</td>
+                            <td>45</td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <td>AI Innovation Challenge</td>
+                            <td>3,210</td>
+                            <td>32</td>
+                            <td>Closed</td>
+                        </tr>
+                        <tr>
+                            <td>Web Dev Hackathon</td>
+                            <td>1,234</td>
+                            <td>12</td>
+                            <td>Active</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <ul class="list">
+                <li><a href="../HTML/FAQS.html">FAQs</a></li>
+                <li><a href="../HTML/Terms.html">Terms of Use</a></li>
+                <li><a href="../HTML/Privacy.html">Privacy & Terms</a></li>
+            </ul>
+            <p>&copy; 2023 IT FOR Youth Ghana. All rights reserved.</p>
+        </footer>
+        
+    </div>    
+
+    <script src="../js/admin-dashboard-script.js"></script>
+</body>
+</html>

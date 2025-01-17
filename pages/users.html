@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Manage Users</title>
+    <link rel="stylesheet" href="../css/manageCandidates.css">
+    <link rel="shortcut icon" href="../images/Asset-1.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="header">
+            <div class="logo">
+                <img src="../images/Asset-1.png" alt="IT FOR Youth Ghana Logo">
+                <span>IT FOR Youth Ghana</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search...">
+            </div>
+            <div class="header-actions">
+                <div class="notifications">
+                    <span class="notification-icon">🔔</span>
+                    <span class="notification-count">3</span>
+                </div>
+                <div class="user-profile">
+                    <img src="../images/FB_IMG_17359007898946991.jpg" alt="Admin Avatar" class="avatar">
+                    <span class="username">Admin User</span>
+                </div>
+            </div>
+        </header>
+
+        <nav class="sidebar">
+            <ul>
+                <li><a href="../pages/dashboard.html"><span class="icon">📊</span> Dashboard Overview</a></li>
+                <li><a href="../pages/events.html"><span class="icon">📅</span> Manage Events</a></li>
+                <li><a href="../pages/manageCandidates.html"><span class="icon">👥</span> Manage Candidates</a></li>
+                <li class="active"><a href="../pages/users.html"><span class="icon">👤</span> Manage Users</a></li>
+                <li><a href="../pages/analysis.html"><span class="icon">📈</span> Analytics</a></li>
+                <li><a href="../pages/settings.html"><span class="icon">⚙️</span> Settings</a></li>
+                <li><a href="../pages/support.html"><span class="icon">💬</span> Support</a></li>
+            </ul>
+        </nav>
+
+        <section id="users" class="manage-users">
+            <h1>Manage Users</h1>
+            <div class="user-actions">
+                <button class="action-button" id="addUserBtn">Add New User</button>
+                <button class="action-button" id="deleteUserBtn">Delete Selected Users</button>
+            </div>
+        
+            <div class="users-list">
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAllUsers"></th>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody">
+                        <tr>
+                            <td><input type="checkbox" class="userCheckbox"></td>
+                            <td>John Doe</td>
+                            <td>john.doe@example.com</td>
+                            <td>Admin</td>
+                            <td>Active</td>
+                            <td>
+                                <button class="action-button edit-btn">Edit</button>
+                                <button class="action-button delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="userCheckbox"></td>
+                            <td>Jane Smith</td>
+                            <td>jane.smith@example.com</td>
+                            <td>Editor</td>
+                            <td>Inactive</td>
+                            <td>
+                                <button class="action-button edit-btn">Edit</button>
+                                <button class="action-button delete-btn">Delete</button>
+                            </td>
+                        </tr>
+                        <!-- Additional user rows can be dynamically added -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <ul class="list">
+                <li><a href="../HTML/FAQS.html">FAQs</a></li>
+                <li><a href="../HTML/Terms.html">Terms of Use</a></li>
+                <li><a href="../HTML/Privacy.html">Privacy & Terms</a></li>
+            </ul>
+            <p>&copy; 2023 IT FOR Youth Ghana. All rights reserved.</p>
+        </footer>
+        
+    </div>  
+    
+    <script src="../js/admin-dashboard-script.js"></script>
+</body>
+</html>

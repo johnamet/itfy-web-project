@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details</title>
+    <link rel="stylesheet" href="../css/event-details.css">
+</head>
+<body>
+<div id="app" class="min-h-screen bg-gradient">
+    <header id="event-header"></header>
+
+    <main class="container">
+        <div class="grid">
+            <div class="main-content">
+                <img id="event-cover" class="event-image" alt="Event Cover" width="800" height="400" style="margin: auto"
+                     src="../images/FB_IMG_17359007536148603.jpg" >
+                <section id="event-description"></section>
+                <section id="event-timeline"></section>
+            </div>
+            <aside class="sidebar">
+                <ul id="category-list" class="category-list"></ul>
+                <button id="register-cta" class="btn">Register</button>
+            </aside>
+        </div>
+
+        <section id="related-events"></section>
+    </main>
+</div>
+
+<script type="module" src="../js/event-details-script.js"></script>
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+<link rel="stylesheet" href="../css/event-details.css">
+
+</body>
+</html>
