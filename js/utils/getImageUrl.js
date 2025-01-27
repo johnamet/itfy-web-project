@@ -14,7 +14,5 @@ export async function getImageUrl(category, id, imgElement) {
     } catch (error) {
         // console.error("Error fetching image URL:", error);
         return defaultImageUrl;
-    } finally {
-        imgElement.classList.remove('shimmer');
     }
 }

@@ -1,9 +1,21 @@
+import {fetchData} from "./utils/fetchData.js";
+import {baseUrl} from "./utils/constants.js";
+
 document.addEventListener('DOMContentLoaded', () => {
     const loginForm = document.getElementById('loginForm');
     const loginButton = document.getElementById('loginButton');
     const progressBar = document.getElementById('progressBar');
     const progressElement = progressBar.querySelector('.progress');
     const statusMessage = document.getElementById('statusMessage');
+    const codingJoke = document.querySelector('.coding-joke');
+
+    // Animate the coding joke
+    setInterval(() => {
+        codingJoke.style.transform = 'translateY(-5px)';
+        setTimeout(() => {
+            codingJoke.style.transform = 'translateY(0)';
+        }, 500);
+    }, 3000);
 
     loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -18,67 +30,51 @@ document.addEventListener('DOMContentLoaded', () => {
         loginButton.disabled = true;
         loginButton.textContent = 'Signing in...';
 
-        try {
-            // Simulate progress
-            await simulateProgress(window.location.href = './dashboard.html');
+      try {
+    // Simulate progress
+    await simulateProgress();
 
-            // Perform login API call using AJAX
-            // const xhr = new XMLHttpRequest();
-            // xhr.open('POST', 'http://138.68.164.220:8000/evoting/auth/login', true);
-            // xhr.setRequestHeader('Content-Type', 'application/json');
+    const response = await fetchData("POST", `${baseUrl}/auth/login`, { email, password });
 
-            // xhr.onreadystatechange = function () {
-            //     if (xhr.readyState === 4) {
-            //         progressBar.style.display = 'none';
-            //         loginButton.disabled = false;
-            //         loginButton.textContent = 'Sign in';
-
-            //         if (xhr.status === 200) {
-            //             const response = JSON.parse(xhr.responseText);
-
-            //             if (response.success) {
-            //                 // Success
-            //                 statusMessage.textContent = 'Login successful! Redirecting...';
-            //                 statusMessage.classList.add('success');
-            //                 setTimeout(() => {
-            //                     ; // Redirect to dashboard
-            //                 }, 1500);
-            //             } else {
-            //                 // Show error message from server
-            //                 statusMessage.textContent = 'Invalid credentials. Please try again.';
-            //                 statusMessage.classList.add('error');
-            //             }
-            //         } else {
-
-            //             console.log(xhr.responseText);
-            //             // Error response
-            //             const errorResponse = xhr.responseText
-            //                 ? JSON.parse(xhr.responseText)
-            //                 : { error: 'An unexpected error occurred.' };
-            //             statusMessage.textContent = errorResponse.error || 'An unexpected error occurred.';
-            //             statusMessage.classList.add('error');
-            //         }
-            //     }
-            // };
-
-            // Send the request with the email and password as JSON
-            xhr.send(JSON.stringify({ email, password }));
-        } catch (error) {
-            // Handle any unexpected client-side errors
-            statusMessage.textContent = error.message || 'An unexpected error occurred.';
-            statusMessage.classList.add('error');
-        } finally {
-            progressBar.style.display = 'none';
-            loginButton.disabled = false;
-            loginButton.textContent = 'Sign in';
-        }
-    });
-
-    async function simulateProgress() {
-        const totalSteps = 100;
-        for (let i = 0; i <= totalSteps; i++) {
-            await new Promise(resolve => setTimeout(resolve, 20));
-            progressElement.style.width = `${i}%`;
-        }
+    if (response.success) {
+        // Simulated successful login
+        statusMessage.textContent = 'Login successful! Redirecting...';
+        statusMessage.classList.add('success');
+        setTimeout(() => {
+            window.location.href = './dashboard.html';
+        }, 1500);
+    } else {
+        throw new Error(response.message || 'Login failed');
     }
+} catch (error) {
+    statusMessage.textContent = error.error || 'An unexpected error occurred.';
+    statusMessage.classList.add('error');
+} finally {
+    progressBar.style.display = 'none';
+    loginButton.disabled = false;
+    loginButton.textContent = 'Sign in';
+}
 });
+
+async function simulateProgress() {
+    const totalSteps = 100;
+    for (let i = 0; i <= totalSteps; i++) {
+        await new Promise(resolve => setTimeout(resolve, 20));
+        progressElement.style.width = `${i}%`;
+    }
+}
+
+    // Add floating labels
+    const inputs = document.querySelectorAll('input');
+    inputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.labels[0].classList.add('active');
+        });
+        input.addEventListener('blur', () => {
+            if (input.value === '') {
+                input.labels[0].classList.remove('active');
+            }
+        });
+    });
+});
+

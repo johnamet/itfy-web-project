@@ -270,7 +270,8 @@ h2 {
     height: auto;
     width: 100%;
     border-radius: 10px;
-    object-fit: cover;
+    margin: 3px;
+    object-fit: fill;
 }
 
 .event-card, .candidate-card {

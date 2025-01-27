@@ -1,4 +1,4 @@
-import { createCandidateCard } from './utils/components/createCandidateCard.js';
+import {createCandidateCard2} from './utils/components/createCandidateCard.js';
 import { fetchData } from './utils/fetchData.js';
 import { baseUrl } from './utils/constants.js';
 import EmptyNotice from "./utils/components/emptyNotice.js";
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const candidates = response.candidates;
 
             candidates.forEach(candidate => {
-                const candidateCard = createCandidateCard(candidate);
+                const candidateCard = createCandidateCard2(candidate);
                 candidateList.appendChild(candidateCard);
             });
 
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     loadMoreBtn.addEventListener('click', loadCandidates);
 
     // Initial load
-    loadCandidates();
+    await loadCandidates();
 
     // Add animation to candidate cards
     const observer = new MutationObserver((mutations) => {

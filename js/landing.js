@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const baseUrl = "http://localhost:8000/evoting/api/v1";
     // Login button functionality
     loginBtn.addEventListener('click', () => {
-        window.location.href = "../web_static/pages/login.html";
+        window.location.href = "./pages/login.html";
     });
 
     // Simple fade-in animation for hero section
@@ -81,8 +81,26 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
+    // Initialize Swiper
+    const swiper = new Swiper('.swiper-container', {
+        loop: true,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+    });
+
 
     await fetchEvents();
+    swiper.update();
 
     await  fetchCategories();
 

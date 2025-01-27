@@ -27,6 +27,7 @@ export function createEvent(event) {
         eventThumbnail.onload = () => {
             const colorThief = new ColorThief();
             const dominantColor = colorThief.getColor(eventThumbnail);
+            eventCard.style.textShadow = `0 0 10px rgba(${dominantColor.join(",")},.5)`;
             eventCard.style.boxShadow = `0 10px 15px -3px rgba(${dominantColor.join(",")},.1), 0 4px 6px -2px rgba(${dominantColor.join(",")},.05)`;
         };
     });

@@ -5,12 +5,19 @@ import {baseUrl} from "./constants.js";
 import {createEvent} from "./components/createEvent.js";
 
 export async function fetchEvents() {
+
+    const eventList = document.querySelector('#event-list');
+
+    for (let i = 0; i < 3; i++) {
+        const shimmerDiv = document.createElement('div');
+        shimmerDiv.classList.add('swiper-slide', 'shimmer');
+        eventList.appendChild(shimmerDiv);
+    }
     try {
         const response = await fetchData("GET", `${baseUrl}/events`);
         const {success, events} = response;
 
         if (success) {
-            const eventList = document.querySelector('#event-list');
 
             // Prepare promises for fetching all event thumbnail URLs
             const eventPromises = events.map(async event => {
@@ -27,7 +34,6 @@ export async function fetchEvents() {
                 }
 
 
-                console.log(event);
                 // Format dates
                 const {formattedDate: eventDate, formattedTime: eventTime} = formatDateTime(start_date);
                 const {formattedDate: eventEndDate, formattedTime: eventEndTime} = formatDateTime(end_date);
@@ -49,12 +55,17 @@ export async function fetchEvents() {
             // Wait for all promises to resolve and append event cards to the DOM
             const formattedEvents = await Promise.all(eventPromises);
 
+            eventList.innerHTML = "";
+
             formattedEvents.forEach(event => {
                 if("archived" in event && event.archived === true){
                     return;
                 }
-                const eventCard = createEvent(event);
-                eventList.appendChild(eventCard);
+                const eventSlide = document.createElement('div');
+                eventSlide.classList.add('swiper-slide');
+
+                eventSlide.appendChild(createEvent(event));
+                eventList.appendChild(eventSlide);
             });
 
             if (formattedEvents.length === 0){

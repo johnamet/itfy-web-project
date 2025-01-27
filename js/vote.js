@@ -46,8 +46,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             ]);
 
             selectedEvent = eventData;
+            console.log("Event Data", selectedEvent);
             selectedCandidate = candidateData;
-            populateCategoryDropdown(selectedEvent.categories.filter(category => selectedCandidate.categories.includes(category.id)), categoryId);
+            console.log("Candidate Data", selectedCandidate);
+            populateCategoryDropdown(selectedEvent.categories.filter(category => selectedCandidate.category_ids.includes(category.id)), categoryId);
 
             displayEventInfo(selectedEvent);
             displayCandidateInfo(selectedCandidate);

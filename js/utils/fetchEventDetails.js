@@ -1,7 +1,7 @@
 import {baseUrl} from "./constants.js";
 import {fetchData} from "./fetchData.js";
 import {formatDateTime} from "./dateTimeFormatter.js";
-import {getImageUrl} from "./getImageUrl";
+import {getImageUrl} from "./getImageUrl.js";
 
 export async function fetchEventDetails(id, addRelatedEvents = true) {
     const url = `${baseUrl}/events/${id}`;
@@ -22,12 +22,12 @@ export async function fetchEventDetails(id, addRelatedEvents = true) {
             name,
             description,
             date,
-            timeline: otherInfo["event_timeline"],
+            timeline: "event_timeline" in otherInfo? otherInfo["event_timeline"]: [],
             location: otherInfo["location"]
         }
 
         const categoriesResp = await fetchData("GET", `${baseUrl}/categories?eventId=${id}`);
-        const image = await getImageUrl("events", id);
+        const image = await getImageUrl("events", id) || "./images/Asset-1.png";
 
         if (image){
             event = {

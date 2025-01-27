@@ -1,15 +1,16 @@
 :root {
-    --primary-blue: #0056A4;
-    --primary-red: #D2232A;
-    --light-blue: #E8F3FC;
-    --white: #FFFFFF;
-    --gray: #F0F0F0;
-    --dark-gray: #4A4A4A;
+    --primary-blue: #0056a4;
+    --primary-red: #d2232a;
+    --light-blue: #e8f3fc;
+    --white: #ffffff;
+    --gray: #f0f0f0;
+    --dark-gray: #4a4a4a;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(rgba(44, 124, 216, 0.5), rgba(44, 124, 216, 0.5)), url(../images/FB_IMG_17359007898946991.jpg);
+    font-family: "Poppins", Arial, sans-serif;
+    background: linear-gradient(rgba(44, 124, 216, 0.5), rgba(44, 124, 216, 0.5)),
+    url(../images/FB_IMG_17359007898946991.jpg);
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -22,111 +23,142 @@ body {
 
 .container {
     display: flex;
-    background-color: var(--light-blue);
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     width: 100%;
-    max-width: 800px;
+    max-width: 900px;
     overflow: hidden;
 }
 
 .login-box {
     flex: 1;
-    padding: 2rem;
+    padding: 3rem;
 }
 
 .cultural-symbols {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
 }
 
 .adinkra-symbol {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 50%;
     cursor: help;
+    transition: transform 0.3s ease;
 }
 
-/* Placeholder images for Adinkra symbols */
+.adinkra-symbol:hover {
+    transform: scale(1.1);
+}
+
 .adinkra-symbol:nth-child(1) {
-    background-image: url('../images/Asset-1.png');
+    background-image: url("../images/Asset-1.png");
 }
-
 .adinkra-symbol:nth-child(2) {
-    background-image: url('../images/Asset-1.png');
+    background-image: url("../images/Asset-1.png");
 }
-
 .adinkra-symbol:nth-child(3) {
-    background-image: url('../images/Asset-1.png');
+    background-image: url("../images/Asset-1.png");
 }
 
 h1 {
     color: var(--primary-blue);
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 2.5rem;
 }
 
 .coding-joke {
     background-color: var(--primary-blue);
     padding: 1rem;
-    border-radius: 4px;
-    margin-bottom: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
     text-align: center;
+    color: var(--white);
+    transition: transform 0.3s ease;
+}
+
+.coding-joke:hover {
+    transform: translateY(-5px);
 }
 
 .punchline {
     font-weight: bold;
     color: var(--white);
+    margin-top: 0.5rem;
 }
 
 .form-group {
-    margin-bottom: 1rem;
-}
-
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-    color: var(--dark-gray);
+    margin-bottom: 1.5rem;
+    position: relative;
 }
 
 input {
     width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 0.8rem;
+    border: 2px solid var(--gray);
+    border-radius: 8px;
     font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+}
+
+label {
+    position: absolute;
+    left: 0.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--dark-gray);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+input:focus + label,
+input:not(:placeholder-shown) + label {
+    top: 0;
+    font-size: 0.8rem;
+    background-color: var(--white);
+    padding: 0 0.3rem;
 }
 
 button {
     width: 100%;
-    padding: 0.75rem;
-    background-color: var(--primary-red);
-    color: white;
+    padding: 1rem;
+    background-color: var(--primary-blue);
+    color: var(--white);
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #a50e1f;
+    background-color: #004483;
 }
 
 .progress-bar {
-    height: 4px;
-    background-color: #e0e0e0;
+    height: 5px;
+    background-color: var(--gray);
     margin-top: 1rem;
+    border-radius: 5px;
     overflow: hidden;
+    display: none;
 }
 
 .progress {
     height: 100%;
+    background-color: var(--primary-blue);
     width: 0;
-    background-color: var(--primary-red);
     transition: width 0.3s ease;
 }
 
@@ -137,16 +169,16 @@ button:hover {
 }
 
 .status-message.success {
-    color: var(--primary-blue);
+    color: #28a745;
 }
 
 .status-message.error {
-    color: var(--white);
+    color: var(--primary-red);
 }
 
 .computing-image {
     flex: 1;
-    background-image: url('../images/Asset-1.png');
+    background-image: url("../images/FB_IMG_17359007898946991.jpg");
     background-size: cover;
     background-position: center;
 }
@@ -157,6 +189,7 @@ button:hover {
     }
 
     .computing-image {
-        height: 200px;
+        display: none;
     }
 }
+
