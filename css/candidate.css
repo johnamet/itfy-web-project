@@ -36,6 +36,7 @@ header {
     top: 0;
     z-index: 1000;
 }
+
 .logo {
     display: flex;
     align-items: center;
@@ -43,7 +44,8 @@ header {
     font-size: 1.2rem;
     color: white;
 }
-header .logo img{
+
+header .logo img {
     width: auto;
     height: 50px;
     background-color: #f4f4f4;
@@ -87,13 +89,14 @@ nav ul li a.active {
     border-bottom: 2px solid var(--primary-red);
 }
 
-.content h1{
+.content h1 {
     color: black;
     margin-top: 40px;
     text-align: center;
     font-size: 30px;
 }
-.content h3{
+
+.content h3 {
     text-align: center;
     line-height: 1.5;
     text-decoration: underline;

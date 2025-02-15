@@ -1,7 +1,7 @@
-import { getImageUrl } from "../getImageUrl.js";
+import {getImageUrl} from "../getImageUrl.js";
 
 export function createCategoryCard(category) {
-    const { name, eventId, description, id } = category;
+    const {name, eventId, description, id} = category;
     console.log("eventId", eventId);
 
     const card = document.createElement("div");

@@ -2,7 +2,7 @@
 
 import {formatDateTime} from "../dateTimeFormatter.js";
 
-function RelatedEvents({ relatedEvents }) {
+function RelatedEvents({relatedEvents}) {
     return `
         <section class="mt-12">
             <h2 class="text-2xl font-semibold text-gray-800 mb-6">Related Events</h2>
@@ -13,7 +13,7 @@ function RelatedEvents({ relatedEvents }) {
                             <img src="${event.image}" alt="${event.name}" class="w-full h-48 object-cover" />
                             <div class="p-4">
                                 <h3 class="text-lg font-semibold text-gray-800 mb-2">${event.name}</h3>
-                                <p class="text-sm text-gray-600">${formatDateTime(event.start_date)}</p>
+                                <p class="text-sm text-gray-600">${formatDateTime(event.start_date).formattedDate} - ${formatDateTime(event.end_date).formattedDate} </p>
                             </div>
                         </div>
                     </a>

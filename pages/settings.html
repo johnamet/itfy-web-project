@@ -2,102 +2,104 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Admin Dashboard - Settings</title>
-    <link rel="stylesheet" href="../css/settings.css">
-    <link rel="shortcut icon" href="../images/Asset-1.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="../css/settings.css" rel="stylesheet">
+    <link href="../images/Asset-1.png" rel="shortcut icon" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
 </head>
 <body>
-    <div class="dashboard-container">
-        <header class="header">
-            <div class="logo">
-                <img src="../images/Asset-1.png" alt="IT FOR Youth Ghana Logo">
-                <span>IT FOR Youth Ghana</span>
+<div class="dashboard-container">
+    <header class="header">
+        <div class="logo">
+            <img alt="IT FOR Youth Ghana Logo" src="../images/Asset-1.png">
+            <span>IT FOR Youth Ghana</span>
+        </div>
+        <div class="search-bar">
+            <input placeholder="Search..." type="text">
+        </div>
+        <div class="header-actions">
+            <div class="notifications">
+                <span class="notification-icon">🔔</span>
+                <span class="notification-count">3</span>
             </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Search...">
+            <div class="user-profile">
+                <img alt="Admin Avatar" class="avatar" src="../images/FB_IMG_17359007898946991.jpg">
+                <span class="username">Admin User</span>
             </div>
-            <div class="header-actions">
-                <div class="notifications">
-                    <span class="notification-icon">🔔</span>
-                    <span class="notification-count">3</span>
-                </div>
-                <div class="user-profile">
-                    <img src="../images/FB_IMG_17359007898946991.jpg" alt="Admin Avatar" class="avatar">
-                    <span class="username">Admin User</span>
-                </div>
-            </div>
-        </header>
+        </div>
+    </header>
 
-        <nav class="sidebar">
-            <ul>
-                <li><a href="../pages/dashboard.html"><span class="icon">📊</span> Dashboard Overview</a></li>
-                <li><a href="../pages/events.html"><span class="icon">📅</span> Manage Events</a></li>
-                <li><a href="../pages/manageCandidates.html"><span class="icon">👥</span> Manage Candidates</a></li>
-                <li><a href="../pages/users.html"><span class="icon">👤</span> Manage Users</a></li>
-                <li><a href="../pages/analysis.html"><span class="icon">📈</span> Analytics</a></li>
-                <li class="active"><a href="../pages/settings.html"><span class="icon">⚙️</span> Settings</a></li>
-                <li><a href="../pages/support.html"><span class="icon">💬</span> Support</a></li>
-            </ul>
-        </nav>
+    <nav class="sidebar">
+        <ul>
+            <li><a href="../pages/dashboard.html"><span class="icon">📊</span> Dashboard Overview</a></li>
+            <li><a href="../pages/events.html"><span class="icon">📅</span> Manage Events</a></li>
+            <li><a href="../pages/manageCandidates.html"><span class="icon">👥</span> Manage Candidates</a></li>
+            <li><a href="../pages/users.html"><span class="icon">👤</span> Manage Users</a></li>
+            <li><a href="../pages/analysis.html"><span class="icon">📈</span> Analytics</a></li>
+            <li class="active"><a href="../pages/settings.html"><span class="icon">⚙️</span> Settings</a></li>
+            <li><a href="../pages/support.html"><span class="icon">💬</span> Support</a></li>
+        </ul>
+    </nav>
 
-        <section id="settings" class="settings-section">
-            <h1>Settings</h1>
-            <div class="settings-container">
-                <div class="settings-card">
-                    <h2>Account Settings</h2>
-                    <form id="accountSettingsForm">
-                        <label for="username">Username</label>
-                        <input type="text" id="username" name="username" value="Admin User" required />
-        
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" value="admin@example.com" required />
-        
-                        <label for="password">Change Password</label>
-                        <input type="password" id="password" name="password" placeholder="Enter new password" />
-        
-                        <button type="submit" class="save-button">Save Changes</button>
-                    </form>
-                </div>
-        
-                <div class="settings-card">
-                    <h2>Platform Settings</h2>
-                    <form id="platformSettingsForm">
-                        <label for="platformName">Platform Name</label>
-                        <input type="text" id="platformName" name="platformName" value="IT FOR Youth Ghana" required />
-        
-                        <label for="theme">Theme</label>
-                        <select id="theme" name="theme">
-                            <option value="light">Light</option>
-                            <option value="dark">Dark</option>
-                        </select>
-        
-                        <label for="notifications">Enable Notifications</label>
-                        <input type="checkbox" id="notifications" name="notifications" checked />
-        
-                        <button type="submit" class="save-button">Save Changes</button>
-                    </form>
-                </div>
-        
-                <div class="settings-card">
-                    <h2>Delete Account</h2>
-                    <p>Warning: Deleting your account will remove all your data from the platform. This action cannot be undone.</p>
-                    <button id="deleteAccountButton" class="delete-button">Delete Account</button>
-                </div>
+    <section class="settings-section" id="settings">
+        <h1>Settings</h1>
+        <div class="settings-container">
+            <div class="settings-card">
+                <h2>Account Settings</h2>
+                <form id="accountSettingsForm">
+                    <label for="username">Username</label>
+                    <input id="username" name="username" required type="text" value="Admin User"/>
+
+                    <label for="email">Email</label>
+                    <input id="email" name="email" required type="email" value="admin@example.com"/>
+
+                    <label for="password">Change Password</label>
+                    <input id="password" name="password" placeholder="Enter new password" type="password"/>
+
+                    <button class="save-button" type="submit">Save Changes</button>
+                </form>
             </div>
-        </section>
-        
-        <footer class="footer">
-            <ul class="list">
-                <li><a href="../HTML/FAQS.html">FAQs</a></li>
-                <li><a href="../HTML/Terms.html">Terms of Use</a></li>
-                <li><a href="../HTML/Privacy.html">Privacy & Terms</a></li>
-            </ul>
-            <p>&copy; 2023 IT FOR Youth Ghana. All rights reserved.</p>
-        </footer>
-    </div>
-    
-    <script src="../js/admin-dashboard-script.js"></script>
+
+            <div class="settings-card">
+                <h2>Platform Settings</h2>
+                <form id="platformSettingsForm">
+                    <label for="platformName">Platform Name</label>
+                    <input id="platformName" name="platformName" required type="text" value="IT FOR Youth Ghana"/>
+
+                    <label for="theme">Theme</label>
+                    <select id="theme" name="theme">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                    </select>
+
+                    <label for="notifications">Enable Notifications</label>
+                    <input checked id="notifications" name="notifications" type="checkbox"/>
+
+                    <button class="save-button" type="submit">Save Changes</button>
+                </form>
+            </div>
+
+            <div class="settings-card">
+                <h2>Delete Account</h2>
+                <p>Warning: Deleting your account will remove all your data from the platform. This action cannot be
+                    undone.</p>
+                <button class="delete-button" id="deleteAccountButton">Delete Account</button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <ul class="list">
+            <li><a href="../HTML/FAQS.html">FAQs</a></li>
+            <li><a href="../HTML/Terms.html">Terms of Use</a></li>
+            <li><a href="../HTML/Privacy.html">Privacy & Terms</a></li>
+        </ul>
+        <p>&copy; 2023 IT FOR Youth Ghana. All rights reserved.</p>
+    </footer>
+</div>
+
+<script src="../js/admin-dashboard-script.js"></script>
 </body>
 </html>

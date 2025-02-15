@@ -6,10 +6,10 @@ export async function fetchCandidateData(candidateId) {
     const resp = await fetchData('GET', `${baseUrl}/candidates/${candidateId}`);
     const image = await getImageUrl('candidates', candidateId);
 
-    if(resp.success){
+    if (resp.success) {
         resp.candidate.image = image;
         return resp.candidate;
-    }else{
+    } else {
         return {};
     }
 }

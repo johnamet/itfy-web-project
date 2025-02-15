@@ -4,7 +4,7 @@
  * @param {Array} props.timeline - An array of timeline events.
  * @returns {string} - HTML string for the event timeline.
  */
-function EventTimeline({ timeline }) {
+function EventTimeline({timeline}) {
     if (!timeline || timeline.length === 0) {
         return `
       <section class="timeline-section">
@@ -40,14 +40,14 @@ function EventTimeline({ timeline }) {
 
 document.addEventListener("DOMContentLoaded", async () => {
     const timelineData = [
-        { time: "9:00 AM", description: "Opening Keynote" },
-        { time: "11:00 AM", description: "Breakout Sessions" },
-        { time: "1:00 PM", description: "Lunch" },
-        { time: "3:00 PM", description: "Workshops" },
+        {time: "9:00 AM", description: "Opening Keynote"},
+        {time: "11:00 AM", description: "Breakout Sessions"},
+        {time: "1:00 PM", description: "Lunch"},
+        {time: "3:00 PM", description: "Workshops"},
     ];
 
     // Render Event Timeline
     const eventTimelineContainer = document.getElementById("event-timeline");
-    eventTimelineContainer.innerHTML = EventTimeline({ timeline: timelineData });
+    eventTimelineContainer.innerHTML = EventTimeline({timeline: timelineData});
 });
 export default EventTimeline;

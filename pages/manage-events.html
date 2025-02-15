@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Manage Events | IT FOR Youth Ghana Voting Platform</title>
-    <link rel="shortcut icon" href="../images/Asset-1.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="../images/Asset-1.png" rel="shortcut icon" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="../css/notification.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -24,207 +26,301 @@
     </script>
     <style>
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
+
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
     </style>
 </head>
 <body class="bg-gray-100 font-sans">
-    <div class="flex h-screen bg-gray-100">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-md">
-            <div class="p-4">
-                <img src="../images/Asset-1.png" alt="IT FOR Youth Ghana Logo" class="w-12 h-12 mx-auto mb-4">
-                <h2 class="text-xl font-semibold text-center text-gray-800">IT FOR Youth Ghana</h2>
+
+<div class="flex h-screen bg-gray-100">
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white shadow-md">
+        <div class="p-4">
+            <img alt="IT FOR Youth Ghana Logo" class="w-12 h-12 mx-auto mb-4" src="../images/Asset-1.png">
+            <h2 class="text-xl font-semibold text-center text-gray-800"><a href="../index.html">IT FOR Youth Ghana</a>
+            </h2>
+        </div>
+        <nav class="mt-6">
+            <a class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200"
+               href="dashboard.html">
+                <i class="fas fa-home mr-2"></i> Dashboard
+            </a>
+            <a class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200"
+               href="#">
+                <i class="fas fa-vote-yea mr-2"></i> Voting
+            </a>
+            <a class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200"
+               href="manage-candidates.html">
+                <i class="fas fa-users mr-2"></i> Candidates
+            </a>
+            <a class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200"
+               href="#">
+                <i class="fas fa-chart-bar mr-2"></i> Results
+            </a>
+            <a class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200"
+               href="#">
+                <i class="fas fa-cog mr-2"></i> Settings
+            </a>
+            <a class="block py-2 px-4 bg-primary text-white" href="manage-events.html">
+                <i class="fas fa-calendar-alt mr-2"></i> Events
+            </a>
+            <a class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200"
+               href="manage-category.html">
+                <i class="fas fa-list mr-2"></i> Categories
+            </a>
+            <a class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200"
+               href="#">
+                <i class="fas fa-user mr-2"></i> Users
+            </a>
+        </nav>
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
+        <div class="container mx-auto px-6 py-8">
+            <h1 class="text-3xl font-semibold text-gray-800 mb-6">Manage Events</h1>
+            <button class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition-colors duration-200 mb-6"
+                    id="createEventBtn">
+                Create New Event
+            </button>
+
+            <!-- Event Lists -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Active Events</h2>
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Event Name
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Created Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Start Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                End Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="activeEventsTable">
+                        <!-- Active events will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4" id="active-pagination"></div>
             </div>
-            <nav class="mt-6">
-                <a href="dashboard.html" class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200">
-                    <i class="fas fa-home mr-2"></i> Dashboard
-                </a>
-                <a href="#" class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200">
-                    <i class="fas fa-vote-yea mr-2"></i> Voting
-                </a>
-                <a href="#" class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200">
-                    <i class="fas fa-users mr-2"></i> Candidates
-                </a>
-                <a href="#" class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200">
-                    <i class="fas fa-chart-bar mr-2"></i> Results
-                </a>
-                <a href="#" class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200">
-                    <i class="fas fa-cog mr-2"></i> Settings
-                </a>
-                <a href="manage-events.html" class="block py-2 px-4 bg-primary text-white">
-                    <i class="fas fa-calendar-alt mr-2"></i> Events
-                </a>
-                <a href="#" class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200">
-                    <i class="fas fa-list mr-2"></i> Categories
-                </a>
-                <a href="#" class="block py-2 px-4 text-gray-600 hover:bg-primary hover:text-white transition-colors duration-200">
-                    <i class="fas fa-user mr-2"></i> Users
-                </a>
-            </nav>
-        </aside>
 
-        <!-- Main Content -->
-        <main class="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
-            <div class="container mx-auto px-6 py-8">
-                <h1 class="text-3xl font-semibold text-gray-800 mb-6">Manage Events</h1>
-                <button id="createEventBtn" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-dark transition-colors duration-200 mb-6">
-                    Create New Event
-                </button>
-
-                <!-- Event Lists -->
-                <div class="mb-8">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Active Events</h2>
-                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event Name</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200" id="activeEventsTable">
-                                <!-- Active events will be dynamically added here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mt-4" id="active-pagination"></div>
+            <!-- Upcoming Events -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upcoming Events</h2>
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Event Name
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Created Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Start Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                End Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="upcomingEventsTable">
+                        <!-- Upcoming events will be dynamically added here -->
+                        </tbody>
+                    </table>
                 </div>
-
-                <!-- Upcoming Events -->
-                <div class="mb-8">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upcoming Events</h2>
-                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event Name</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200" id="upcomingEventsTable">
-                                <!-- Upcoming events will be dynamically added here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mt-4" id="upcoming-pagination"></div>
-                </div>
-
-                <!-- Archived Events -->
-                <div class="mb-8">
-                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Archived Events</h2>
-                    <div class="bg-white shadow-md rounded-lg overflow-hidden">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                                <tr>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Event Name</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200" id="archivedEventsTable">
-                                <!-- Archived events will be dynamically added here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mt-4" id="archived-pagination"></div>
-                </div>
-
-                <!-- Event Form -->
-                <div id="event-form" class="hidden bg-white shadow-md rounded-lg p-6 mb-8 fade-in">
-                    <h2 id="formTitle" class="text-2xl font-semibold text-gray-800 mb-6">Create New Event</h2>
-                    <form>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label for="eventName" class="block text-sm font-medium text-gray-700 mb-2">Event Name</label>
-                                <input type="text" id="eventName" name="eventName" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-                            <div>
-                                <label for="eventStartDate" class="block text-sm font-medium text-gray-700 mb-2">Event Start Date</label>
-                                <input type="date" id="eventStartDate" name="eventStartDate" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-                            <div>
-                                <label for="eventStartTime" class="block text-sm font-medium text-gray-700 mb-2">Event Start Time</label>
-                                <input type="time" id="eventStartTime" name="eventStartTime" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-                            <div>
-                                <label for="eventEndDate" class="block text-sm font-medium text-gray-700 mb-2">Event End Date</label>
-                                <input type="date" id="eventEndDate" name="eventEndDate" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-                            <div>
-                                <label for="eventEndTime" class="block text-sm font-medium text-gray-700 mb-2">Event End Time</label>
-                                <input type="time" id="eventEndTime" name="eventEndTime" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                            </div>
-                            <div>
-                                <label for="eventStatus" class="block text-sm font-medium text-gray-700 mb-2">Event Status</label>
-                                <select id="eventStatus" name="eventStatus" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                                    <option value="active">Active</option>
-                                    <option value="upcoming">Upcoming</option>
-                                    <option value="archived">Archived</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mt-6">
-                            <label for="eventThumbnail" class="block text-sm font-medium text-gray-700 mb-2">Event Thumbnail</label>
-                            <input type="file" id="eventThumbnail" name="eventThumbnail" accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                        </div>
-                        <div class="mt-6">
-                            <label for="eventDescription" class="block text-sm font-medium text-gray-700 mb-2">Event Description</label>
-                            <textarea id="eventDescription" name="eventDescription" required maxlength="150" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary h-32"></textarea>
-                        </div>
-                        <div class="mt-6">
-                            <h3 class="text-lg font-medium text-gray-800 mb-2">Related Events</h3>
-                            <div class="flex items-center space-x-2 mb-4">
-                                <select id="relatedEventsDropdown" name="relatedEventsDropdown" class="flex-grow px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
-                                    <!-- Options will be dynamically added here -->
-                                </select>
-                                <button type="button" id="addRelatedEventBtn" class="bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary-dark transition-colors duration-200">Add</button>
-                            </div>
-                            <div id="relatedEventsContainer" class="space-y-2">
-                                <!-- Added related events will be displayed here -->
-                            </div>
-                        </div>
-                        <div class="mt-6">
-                            <h3 class="text-lg font-medium text-gray-800 mb-2">Event Timeline</h3>
-                            <div id="timelineFieldsContainer" class="space-y-4">
-                                <!-- Timeline fields will be added here -->
-                            </div>
-                            <button type="button" id="addTimelineFieldBtn" class="mt-2 bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary-dark transition-colors duration-200">Add Timeline Field</button>
-                        </div>
-                        <div class="mt-6">
-                            <h3 class="text-lg font-medium text-gray-800 mb-2">Additional Fields</h3>
-                            <div id="dynamicFieldsContainer" class="space-y-4">
-                                <!-- Dynamic fields will be added here -->
-                            </div>
-                            <button type="button" id="addFieldBtn" class="mt-2 bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary-dark transition-colors duration-200">Add Field</button>
-                        </div>
-                        <div class="mt-8 flex justify-end space-x-4">
-                            <button type="button" id="cancelBtn" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors duration-200">Cancel</button>
-                            <button type="submit" class="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors duration-200">Save Event</button>
-                        </div>
-                    </form>
-                </div>
+                <div class="mt-4" id="upcoming-pagination"></div>
             </div>
-        </main>
+
+            <!-- Archived Events -->
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Archived Events</h2>
+                <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Event Name
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Created Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Start Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                End Date
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Status
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200" id="archivedEventsTable">
+                        <!-- Archived events will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4" id="archived-pagination"></div>
+            </div>
+
+            <!-- Event Form -->
+            <div class="hidden bg-white shadow-md rounded-lg p-6 mb-8 fade-in" id="event-form">
+                <h2 class="text-2xl font-semibold text-gray-800 mb-6" id="formTitle">Create New Event</h2>
+                <form>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" for="eventName">Event
+                                Name</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" id="eventName" name="eventName" required
+                                   type="text">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" for="eventStartDate">Event Start
+                                Date</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" id="eventStartDate" name="eventStartDate" required
+                                   type="date">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" for="eventStartTime">Event Start
+                                Time</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" id="eventStartTime" name="eventStartTime" required
+                                   type="time">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" for="eventEndDate">Event End
+                                Date</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" id="eventEndDate" name="eventEndDate" required
+                                   type="date">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" for="eventEndTime">Event End
+                                Time</label>
+                            <input class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" id="eventEndTime" name="eventEndTime" required
+                                   type="time">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2" for="eventStatus">Event
+                                Status</label>
+                            <select class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" id="eventStatus" name="eventStatus"
+                                    required>
+                                <option value="active">Active</option>
+                                <option value="upcoming">Upcoming</option>
+                                <option value="archived">Archived</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2" for="eventThumbnail">Event
+                            Thumbnail</label>
+                        <input accept="image/*" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" id="eventThumbnail" name="eventThumbnail"
+                               type="file">
+                    </div>
+                    <div class="mt-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2" for="eventDescription">Event
+                            Description</label>
+                        <textarea class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary h-32" id="eventDescription" maxlength="150" name="eventDescription"
+                                  required></textarea>
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">Related Events</h3>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <select class="flex-grow px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary" id="relatedEventsDropdown"
+                                    name="relatedEventsDropdown">
+                                <!-- Options will be dynamically added here -->
+                            </select>
+                            <button class="bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary-dark transition-colors duration-200" id="addRelatedEventBtn"
+                                    type="button">
+                                Add
+                            </button>
+                        </div>
+                        <div class="space-y-2" id="relatedEventsContainer">
+                            <!-- Added related events will be displayed here -->
+                        </div>
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">Event Timeline</h3>
+                        <div class="space-y-4" id="timelineFieldsContainer">
+                            <!-- Timeline fields will be added here -->
+                        </div>
+                        <button class="mt-2 bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary-dark transition-colors duration-200" id="addTimelineFieldBtn"
+                                type="button">
+                            Add Timeline Field
+                        </button>
+                    </div>
+                    <div class="mt-6">
+                        <h3 class="text-lg font-medium text-gray-800 mb-2">Additional Fields</h3>
+                        <div class="space-y-4" id="dynamicFieldsContainer">
+                            <!-- Dynamic fields will be added here -->
+                        </div>
+                        <button class="mt-2 bg-secondary text-white px-4 py-2 rounded-md hover:bg-secondary-dark transition-colors duration-200" id="addFieldBtn"
+                                type="button">
+                            Add Field
+                        </button>
+                    </div>
+                    <div class="mt-8 flex justify-end space-x-4">
+                        <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors duration-200" id="cancelBtn"
+                                type="button">
+                            Cancel
+                        </button>
+                        <button class="bg-primary text-white px-6 py-2 rounded-md hover:bg-primary-dark transition-colors duration-200" id="saveBtn"
+                                type="submit">
+                            Save Event
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <div class="notification" id="notification">
+        <div class="flex items-center">
+            <svg class="checkmark" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+                <circle class="checkmark__circle" cx="26" cy="26" fill="none" r="25"/>
+                <path class="checkmark__check" d="M14.1 27.2l7.1 7.2 16.7-16.8" fill="none"/>
+            </svg>
+            <span class="ml-3" id="notificationMessage"></span>
+        </div>
     </div>
-    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-    <script src="https://kit.fontawesome.com/9083b7c357.js" crossorigin="anonymous"></script>
-    <script type="module" src="../js/manage-events.js"></script>
+</div>
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script crossorigin="anonymous" src="https://kit.fontawesome.com/9083b7c357.js"></script>
+<script src="../js/manage-events.js" type="module"></script>
 </body>
 </html>
 

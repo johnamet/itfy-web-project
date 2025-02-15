@@ -1,4 +1,4 @@
-import { getImageUrl } from "../getImageUrl.js";
+import {getImageUrl} from "../getImageUrl.js";
 
 export function createEvent(event) {
     const {

@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Login | IT FOR Youth Ghana Voting Platform</title>
-    <link rel="shortcut icon" href="../images/Asset-1.png" type="image/png">
-    <link rel="stylesheet" href="../css/login-style.css">
+    <link href="../images/Asset-1.png" rel="shortcut icon" type="image/png">
+    <link href="../css/login-style.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </head>
 <body>
@@ -23,24 +23,24 @@
         </div>
         <form id="loginForm">
             <div class="form-group">
-                <input type="email" id="email" name="email" required>
+                <input id="email" name="email" required type="email">
                 <label for="email">Email address</label>
             </div>
             <div class="form-group">
-                <input type="password" id="password" name="password" required>
+                <input id="password" name="password" required type="password">
                 <label for="password">Password</label>
             </div>
-            <button type="submit" id="loginButton">Sign in</button>
+            <button id="loginButton" type="submit">Sign in</button>
         </form>
-        <div id="progressBar" class="progress-bar">
+        <div class="progress-bar" id="progressBar">
             <div class="progress"></div>
         </div>
-        <div id="statusMessage" class="status-message"></div>
+        <div class="status-message" id="statusMessage"></div>
     </div>
     <div class="computing-image"></div>
 </div>
 <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-<script type="module" src="../js/login.js"></script>
+<script src="../js/login.js" type="module"></script>
 </body>
 </html>
 

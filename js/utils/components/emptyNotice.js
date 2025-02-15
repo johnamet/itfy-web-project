@@ -1,6 +1,6 @@
 // js/utils/components/emptyNotice.js
 
-function EmptyNotice({ message = "No candidates found", subMessage = "Check back later for updates" }) {
+function EmptyNotice({message = "No candidates found", subMessage = "Check back later for updates"}) {
     return `
         <div class="flex flex-col items-center justify-center p-8 bg-white rounded-lg shadow-lg animate-fade-in-up">
             <div class="w-64 h-64 mb-8">

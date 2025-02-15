@@ -1,11 +1,10 @@
-import { getImageUrl } from "../getImageUrl.js";
-import { fetchData } from "../fetchData.js";
-import { castVote } from "../castVote.js";
-import { fetchVotes } from "../fetchVotes.js";
-import { baseUrl, socket } from "../constants.js";
+import {getImageUrl} from "../getImageUrl.js";
+import {fetchData} from "../fetchData.js";
+import {fetchVotes} from "../fetchVotes.js";
+import {baseUrl, socket} from "../constants.js";
 
 export function createCandidateCard(candidate) {
-    const { name, id, description, event_id, category_ids } = candidate;
+    const {name, id, description, event_id, category_ids} = candidate;
 
 
     const card = document.createElement("div");
@@ -94,7 +93,7 @@ export function createCandidateCard(candidate) {
 }
 
 export function createCandidateCard2(candidate) {
-    const { name, id, description, event_id, category_ids } = candidate;
+    const {name, id, description, event_id, category_ids} = candidate;
 
 
     const card = document.createElement("div");

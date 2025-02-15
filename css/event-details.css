@@ -9,6 +9,7 @@ body, html {
     min-height: 100vh;
 }
 
+
 .bg-gradient {
     background: linear-gradient(to bottom right, #cce4f6, #a3bff0);
 }

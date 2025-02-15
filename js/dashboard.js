@@ -1,4 +1,12 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
+
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (!accessToken) {
+        alert("Please Login to Access this Page");
+        window.location.href = "../index.html";
+    }
+
     // Simulated data - replace with actual data fetching in a real application
     const dashboardData = {
         totalUsers: 1250,
@@ -6,15 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
         activeEvents: 5,
         totalCandidates: 25,
         recentActivity: [
-            { action: 'New user registered', time: '5 minutes ago' },
-            { action: 'Vote cast in Event A', time: '10 minutes ago' },
-            { action: 'New candidate added', time: '1 hour ago' },
-            { action: 'Event B completed', time: '2 hours ago' },
+            {action: 'New user registered', time: '5 minutes ago'},
+            {action: 'Vote cast in Event A', time: '10 minutes ago'},
+            {action: 'New candidate added', time: '1 hour ago'},
+            {action: 'Event B completed', time: '2 hours ago'},
         ],
         upcomingEvents: [
-            { name: 'Tech Innovation Contest', date: '2023-08-15' },
-            { name: 'Youth Leadership Summit', date: '2023-09-01' },
-            { name: 'Coding Challenge 2023', date: '2023-09-20' },
+            {name: 'Tech Innovation Contest', date: '2023-08-15'},
+            {name: 'Youth Leadership Summit', date: '2023-09-01'},
+            {name: 'Coding Challenge 2023', date: '2023-09-20'},
         ]
     };
 

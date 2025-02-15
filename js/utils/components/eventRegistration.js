@@ -1,6 +1,6 @@
 // js/utils/components/eventRegistration.js
 
-function RegistrationCTA({ eventId }) {
+function RegistrationCTA({eventId}) {
     return `
         <div class="bg-white rounded-lg shadow-md p-6">
             <h2 class="text-2xl font-semibold text-gray-800 mb-4">Register for This Event</h2>

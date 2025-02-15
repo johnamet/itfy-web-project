@@ -7,6 +7,8 @@ import CategoryList from "./utils/components/categoryList.js";
 import {fetchEventDetails} from "./utils/fetchEventDetails.js";
 import EmptyNotice from "./utils/components/emptyNotice.js";
 import {getImageUrl} from "./utils/getImageUrl.js";
+import {fetchData} from "./utils/fetchData.js";
+import {baseUrl} from "./utils/constants.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
     const app = document.getElementById("app");
@@ -30,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Populate Cover Image
     const eventCover = document.getElementById("event-cover");
 
-    getImageUrl("events", id, eventCover).then((url) =>{
+    getImageUrl("events", id, eventCover).then((url) => {
         eventCover.src = url || "../images/Pic 1.jpg";
         eventCover.alt = event.title;
     })
@@ -42,19 +44,39 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Populate Event Timeline
     const eventTimeline = document.getElementById("event-timeline");
-    eventTimeline.innerHTML = EventTimeline({timeline:event.timeline});
+    eventTimeline.innerHTML = EventTimeline({timeline: event.timeline});
 
     // Populate Category List
     const categoryList = document.getElementById("category-list");
 
-    categoryList.innerHTML = event.categories.length > 0? CategoryList({categories: event.categories}) :
-        EmptyNotice({message:"No Categories found"});
+    categoryList.innerHTML = event.categories.length > 0 ? CategoryList({categories: event.categories}) :
+        EmptyNotice({message: "No Categories found"});
 
     // Populate Related Events
     const relatedEvents = document.getElementById("related-events");
-    relatedEvents.innerHTML = event.relatedEvents.length > 0? RelatedEvents({relatedEvents: event.relatedEvents}):
-    EmptyNotice({message: "No related Events.",
-        subMessage:"This is all we have for now. Thank you."});
+
+    if (event.related_events.length > 0) {
+        const relatedEventsPromises = event.related_events.map(async (id) => {
+            const relEvent = await fetchData("GET", `${baseUrl}/events/${id}`);
+            if (relEvent.success) {
+                const image = await getImageUrl("events", relEvent.event.id);
+                relEvent.image = image;
+                return relEvent.event;
+            }
+            return null;
+        });
+    
+
+        const relatedEventsResults = await Promise.all(relatedEventsPromises);
+        event.relatedEvents = relatedEventsResults.filter(event => event !== null);
+        console.log(event.relatedEvents);
+    }
+
+    relatedEvents.innerHTML = event.relatedEvents.length > 0 ? RelatedEvents({relatedEvents: event.relatedEvents}) :
+        EmptyNotice({
+            message: "No related Events.",
+            subMessage: "This is all we have for now. Thank you."
+        });
 
     // Register Button
     const registerCTA = document.getElementById("register-cta");

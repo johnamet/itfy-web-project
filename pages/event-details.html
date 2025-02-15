@@ -2,36 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Event Details</title>
-    <link rel="stylesheet" href="../css/event-details.css">
+    <link href="../css/event-details.css" rel="stylesheet">
 </head>
 <body>
-<div id="app" class="min-h-screen bg-gradient">
-    <header id="event-header"></header>
+<div class="min-h-screen bg-gradient" id="app">
+    <header id="event-header">
+
+    </header>
 
     <main class="container">
         <div class="grid">
             <div class="main-content">
-                <img id="event-cover" class="event-image" alt="Event Cover" width="800" height="400" style="margin: auto"
-                     src="../images/FB_IMG_17359007536148603.jpg" >
+                <img alt="Event Cover" class="event-image" crossorigin="anonymous" height="595" id="event-cover"
+                     src="../images/FB_IMG_17359007536148603.jpg"
+                     style="margin: auto" width="715">
                 <section id="event-description"></section>
                 <section id="event-timeline"></section>
             </div>
             <aside class="sidebar">
-                <ul id="category-list" class="category-list"></ul>
-                <button id="register-cta" class="btn">Register</button>
+                <ul class="category-list" id="category-list"></ul>
+                <button class="btn" id="register-cta">Register</button>
             </aside>
         </div>
 
         <section id="related-events"></section>
     </main>
 </div>
-
-<script type="module" src="../js/event-details-script.js"></script>
+<script crossorigin="anonymous" src="https://kit.fontawesome.com/9083b7c357.js"></script>
+<script src="../js/event-details-script.js" type="module"></script>
 <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-<link rel="stylesheet" href="../css/event-details.css">
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link href="../css/event-details.css" rel="stylesheet">
 
 </body>
 </html>

@@ -9,16 +9,16 @@ export async function fetchCandidates() {
         const categoryId = urlParams.get("category");
         const eventId = urlParams.get("eventId");
         let response = "";
-        if(eventId){
+        if (eventId) {
             response = await fetchData("GET", `${baseUrl}/candidates?event_id=${eventId}`);
-        }else{
+        } else {
             response = await fetchData("GET", `${baseUrl}/candidates`);
         }
 
         const {success, candidates} = response;
 
         candidates.forEach(candidate => {
-            if (("archived" in candidate && candidate.archived === true)||
+            if (("archived" in candidate && candidate.archived === true) ||
                 ("category_ids" in candidate && candidate.category_ids.length === 0)) {
                 return;
             }

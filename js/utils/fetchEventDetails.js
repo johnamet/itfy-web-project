@@ -8,13 +8,15 @@ export async function fetchEventDetails(id, addRelatedEvents = true) {
     const response = await fetchData("GET", url);
     let event = {}
 
-    if(response.success){
+    if (response.success) {
         const fetchedEvent = response["event"];
+
+        console.log(fetchedEvent);
 
         const {id, description, start_date, end_date, 0: otherInfo, name} = fetchedEvent;
 
-        const {formattedDate:startDate, formattedTime:startTime}= formatDateTime(start_date);
-        const {formattedDate:endDate, formattedTime:endTime} = formatDateTime(end_date);
+        const {formattedDate: startDate, formattedTime: startTime} = formatDateTime(start_date);
+        const {formattedDate: endDate, formattedTime: endTime} = formatDateTime(end_date);
 
         const date = `${startDate} - ${startTime} to ${endDate} - ${endTime}`
         event = {
@@ -22,25 +24,25 @@ export async function fetchEventDetails(id, addRelatedEvents = true) {
             name,
             description,
             date,
-            timeline: "event_timeline" in otherInfo? otherInfo["event_timeline"]: [],
+            timeline: "event_timeline" in otherInfo ? otherInfo["event_timeline"] : [],
             location: otherInfo["location"]
         }
 
         const categoriesResp = await fetchData("GET", `${baseUrl}/categories?eventId=${id}`);
         const image = await getImageUrl("events", id) || "./images/Asset-1.png";
 
-        if (image){
+        if (image) {
             event = {
                 image,
                 ...event
             }
         }
-        if (categoriesResp.success){
+        if (categoriesResp.success) {
             event = {
                 categories: categoriesResp["categories"],
                 ...event
             }
-        }else{
+        } else {
             event = {
                 categories: [],
                 ...event
@@ -49,23 +51,26 @@ export async function fetchEventDetails(id, addRelatedEvents = true) {
 
         const relatedEvents = [];
 
-        if ("related_events" in otherInfo){
-            const eventsResp = otherInfo.related_events.map( async (eventId) => {
-              const event = await fetchData("GET", `${baseUrl}/events?eventId=${eventId}`);
-              return event.event;
+        if ("related_events" in otherInfo && otherInfo["related_events"].length > 0) {
+            const eventsResp = otherInfo.related_events.map(async (eventId) => {
+                const event = await fetchData("GET", `${baseUrl}/events/${eventId}`);
+                print(event);
+                return event.event;
             });
 
-            Promise.all(eventsResp).then((relEvent) =>{
+            Promise.all(eventsResp).then((relEvent) => {
                 relatedEvents.push(relEvent);
             })
 
             event = {
                 relatedEvents,
+                related_events: otherInfo.related_events,
                 ...event
             }
-        }else{
+        } else {
             event = {
                 relatedEvents,
+                related_events: otherInfo.related_events,
                 ...event
             }
         }

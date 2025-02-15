@@ -1,6 +1,6 @@
 import {createCandidateCard2} from './utils/components/createCandidateCard.js';
-import { fetchData } from './utils/fetchData.js';
-import { baseUrl } from './utils/constants.js';
+import {fetchData} from './utils/fetchData.js';
+import {baseUrl} from './utils/constants.js';
 import EmptyNotice from "./utils/components/emptyNotice.js";
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -73,5 +73,5 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     });
 
-    observer.observe(candidateList, { childList: true });
+    observer.observe(candidateList, {childList: true});
 });

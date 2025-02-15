@@ -6,7 +6,7 @@
  * @param {string} props.location - The location of the event.
  * @returns {string} - HTML string for the event header.
  */
-function EventHeader({ title = "Untitled Event", date = "Date not provided", location = "Location not available" }) {
+function EventHeader({title = "Untitled Event", date = "Date not provided", location = "Location not available"}) {
     return `
         <header class="bg-white shadow-md py-8">
             <div class="container mx-auto px-4">

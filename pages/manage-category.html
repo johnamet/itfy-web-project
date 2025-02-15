@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Categories | IT FOR Youth Ghana Voting Platform</title>
+    <link rel="stylesheet" href="../css/admin-dashboard-styles.css">
+    <link rel="stylesheet" href="../css/manage-category-styles.css">
+    <link rel="shortcut icon" href="../images/Asset-1.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/9083b7c357.js"></script>
+
+</head>
+<body>
+<div class="dashboard-container">
+    <nav class="sidebar">
+        <div class="logo">
+            <img src="../images/Asset-1.png" alt="IT FOR Youth Ghana Logo">
+            <h2>IT FOR Youth Ghana</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-vote-yea"></i> Voting</a></li>
+            <li><a href="manage-candidates.html"><i class="fas fa-users"></i> Candidates</a></li>
+            <li><a href="#"><i class="fas fa-chart-bar"></i> Results</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="manage-events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+            <li class="active"><a href="manage-category.html"><i class="fas fa-list"></i> Categories</a></li>
+            <li><a href="#"><i class="fas fa-user"></i> Users</a></li>
+        </ul>
+    </nav>
+    <main class="content">
+        <header>
+            <h1>Manage Categories</h1>
+            <button id="createCategoryBtn">Create New Category</button>
+        </header>
+        <section id="category-list">
+            <h2>Categories</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Category Name</th>
+                    <th>Associated Event</th>
+                    <th>Description</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!-- Categories will be dynamically added here -->
+                </tbody>
+            </table>
+            <div class="pagination" id="category-pagination"></div>
+        </section>
+        <section id="category-form" style="display: none;">
+            <h2 id="formTitle">Create New Category</h2>
+            <form>
+                <label for="categoryName">Category Name:</label>
+                <input type="text" id="categoryName" name="categoryName" required>
+
+                <label for="associatedEvent">Associated Event:</label>
+                <select id="associatedEvent" name="associatedEvent" required>
+                    <!-- Event options will be dynamically added here -->
+                </select>
+
+                <label for="categoryDescription">Category Description:</label>
+                <textarea id="categoryDescription" name="categoryDescription" required maxlength="150"></textarea>
+
+                <button type="submit">Save Category</button>
+                <button type="button" id="cancelBtn">Cancel</button>
+            </form>
+        </section>
+    </main>
+</div>
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script type="module" src="../js/manage-category.js"></script>
+</body>
+</html>
+

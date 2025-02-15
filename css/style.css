@@ -35,6 +35,7 @@ header {
     top: 0;
     z-index: 1000;
 }
+
 .logo {
     display: flex;
     align-items: center;
@@ -42,7 +43,8 @@ header {
     font-size: 1.2rem;
     color: white;
 }
-header .logo img{
+
+header .logo img {
     width: auto;
     height: 50px;
     background-color: #f4f4f4;
@@ -133,23 +135,24 @@ nav ul li a.active {
     }
 }
 
-@keyframes slideshow{
-    0%{
+@keyframes slideshow {
+    0% {
         background: linear-gradient(rgba(0, 0, 255, 0.6), rgba(0, 0, 255, 0.6)), url(../images/Grad\ 6.jpg) center/cover no-repeat;
     }
-    25%{
+    25% {
         background: linear-gradient(rgba(0, 0, 255, 0.6), rgba(0, 0, 255, 0.6)), url(../images/Grad\ 5.jpg) center/cover no-repeat;
     }
-    50%{
+    50% {
         background: linear-gradient(rgba(0, 0, 255, 0.6), rgba(0, 0, 255, 0.6)), url(../images/Grad\ 6.jpg) center/cover no-repeat;
     }
-    75%{
+    75% {
         background: linear-gradient(rgba(0, 0, 255, 0.6), rgba(0, 0, 255, 0.6)), url(../images/Grad\ 3.jpg) center/cover no-repeat;
     }
-    100%{
+    100% {
         background: linear-gradient(rgba(0, 0, 255, 0.6), rgba(0, 0, 255, 0.6)), url(../images/Grad\ 5.jpg) center/cover no-repeat;
     }
 }
+
 h1 {
     font-size: 2.5rem;
     color: var(--white);
@@ -200,7 +203,7 @@ h1 {
     transition: background-color 0.3s ease;
 }
 
-.about button a{
+.about button a {
     color: var(--white);
     text-decoration: none;
 }
@@ -217,10 +220,12 @@ h2 {
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-#categories h2{
+
+#categories h2 {
     text-align: center;
     font-size: 25px;
 }
+
 #category {
     display: flex;
     justify-content: center;
@@ -245,6 +250,7 @@ h2 {
     width: 100%;
     border-radius: 10px;
 }
+
 .vote-button {
     background-color: blue;
     color: white;
@@ -256,6 +262,7 @@ h2 {
     transition: background-color 0.3s ease;
     margin: 10px 0;
 }
+
 .vote-button:hover {
     background-color: rgb(41, 41, 109);
 }
@@ -287,6 +294,7 @@ h2 {
 .event-card:hover, .candidate-card:hover {
     transform: translateY(-5px);
 }
+
 .event-card .event-details {
     display: flex;
     flex-direction: column;
@@ -295,6 +303,7 @@ h2 {
     margin: 10px;
     gap: 10px;
 }
+
 .event-card #eventDescription {
     color: var(--white);
     margin-top: 10px;
@@ -304,23 +313,26 @@ h2 {
     width: 100%;
     max-height: 10em;
 }
+
 .event-card h3, .candidate-card h3 {
     color: var(--white);
     margin-bottom: 10px;
 }
 
-.candidates h2{
+.candidates h2 {
     color: var(--dark-gray);
     font-size: 30px;
     text-align: center;
 }
-.candidate-list{
+
+.candidate-list {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 20px;
 }
-.candidate-card{
+
+.candidate-card {
     display: inline-block;
     margin: 10px;
     padding: 20px;
@@ -332,7 +344,7 @@ h2 {
     text-align: center;
 }
 
-.candidate-card img{
+.candidate-card img {
     width: 100%;
     border-radius: 10px;
 }
@@ -368,7 +380,8 @@ h2 {
     color: blue;
     margin-bottom: 20px;
 }
-.contact p{
+
+.contact p {
     font-size: 18px;
     text-align: center;
     margin-bottom: 5px;

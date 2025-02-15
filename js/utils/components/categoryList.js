@@ -1,7 +1,7 @@
 // js/utils/components/categoryList.js
 
-export default function CategoryList({ categories }) {
-  return `
+export default function CategoryList({categories}) {
+    return `
     <section class="bg-white rounded-lg shadow-md p-6 mb-8">
       <h2 class="text-2xl font-semibold text-gray-800 mb-4">Event Categories</h2>
       <div class="flex flex-wrap gap-2">

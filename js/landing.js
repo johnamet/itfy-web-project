@@ -10,16 +10,16 @@ document.addEventListener('DOMContentLoaded', async () => {
     const eventCards = document.querySelectorAll('.event-card');
     const candidateCards = document.querySelectorAll('.candidate-card');
 
-    const baseUrl = "http://localhost:8000/evoting/api/v1";
     // Login button functionality
     loginBtn.addEventListener('click', () => {
         window.location.href = "./pages/login.html";
     });
 
     // Simple fade-in animation for hero section
+    heroSection.style.opacity = '1';
     setTimeout(() => {
-        heroSection.style.opacity = '0';
         heroSection.style.transition = 'opacity 1s ease-in-out';
+        heroSection.style.opacity = '0';
         setTimeout(() => {
             heroSection.style.opacity = '1';
         }, 50);
@@ -36,29 +36,30 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
     });
-
-    // Simple parallax effect for background
+    // Debounce function to limit the rate at which a function can fire
+    // Combined scroll event listener with debounce
+    let scrollTimeout;
     window.addEventListener('scroll', () => {
-        const scrollPosition = window.pageYOffset;
-        document.body.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
-    });
+        if (scrollTimeout) {
+            clearTimeout(scrollTimeout);
+        }
+        scrollTimeout = setTimeout(() => {
+            const scrollPosition = window.pageYOffset;
+            document.body.style.backgroundPositionY = `${scrollPosition * 0.5}px`;
 
-    // Add 'active' class to navigation links based on scroll position
-    window.addEventListener('scroll', () => {
-        const scrollPosition = window.pageYOffset;
+            document.querySelectorAll('section').forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionBottom = sectionTop + section.offsetHeight;
 
-        document.querySelectorAll('section').forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionBottom = sectionTop + section.offsetHeight;
-
-            if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
-                const correspondingLink = document.querySelector(`nav a[href="#${section.id}"]`);
-                if (correspondingLink) {
-                    navLinks.forEach(link => link.classList.remove('active'));
-                    correspondingLink.classList.add('active');
+                if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                    const correspondingLink = document.querySelector(`nav a[href="#${section.id}"]`);
+                    if (correspondingLink) {
+                        navLinks.forEach(link => link.classList.remove('active'));
+                        correspondingLink.classList.add('active');
+                    }
                 }
-            }
-        });
+            });
+        }, 100);
     });
 
     // Add hover effect to event cards
@@ -85,12 +86,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const swiper = new Swiper('.swiper-container', {
         loop: true,
         pagination: {
-            el: '.swiper-pagination',
+            el: ".swiper-pagination",
             clickable: true,
         },
         navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev',
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
         },
         autoplay: {
             delay: 5000,
@@ -99,10 +100,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
 
-    await fetchEvents();
+    const [events, categories, candidates] = await Promise.all([
+        fetchEvents(),
+        fetchCategories(),
+        fetchCandidates()
+    ]);
     swiper.update();
-
-    await  fetchCategories();
-
-    await fetchCandidates();
 });

@@ -30,39 +30,39 @@ document.addEventListener('DOMContentLoaded', () => {
         loginButton.disabled = true;
         loginButton.textContent = 'Signing in...';
 
-      try {
-    // Simulate progress
-    await simulateProgress();
+        try {
+            // Simulate progress
+            await simulateProgress();
 
-    const response = await fetchData("POST", `${baseUrl}/auth/login`, { email, password });
+            const response = await fetchData("POST", `${baseUrl}/auth/login`, {email, password});
 
-    if (response.success) {
-        // Simulated successful login
-        statusMessage.textContent = 'Login successful! Redirecting...';
-        statusMessage.classList.add('success');
-        setTimeout(() => {
-            window.location.href = './dashboard.html';
-        }, 1500);
-    } else {
-        throw new Error(response.message || 'Login failed');
+            if (response.success) {
+                sessionStorage.setItem("accessToken", response.accessToken);
+                statusMessage.textContent = 'Login successful! Redirecting...';
+                statusMessage.classList.add('success');
+                setTimeout(() => {
+                    window.location.href = './dashboard.html';
+                }, 1500);
+            } else {
+                throw new Error(response.message || 'Login failed');
+            }
+        } catch (error) {
+            statusMessage.textContent = error.error || 'An unexpected error occurred.';
+            statusMessage.classList.add('error');
+        } finally {
+            progressBar.style.display = 'none';
+            loginButton.disabled = false;
+            loginButton.textContent = 'Sign in';
+        }
+    });
+
+    async function simulateProgress() {
+        const totalSteps = 100;
+        for (let i = 0; i <= totalSteps; i++) {
+            await new Promise(resolve => setTimeout(resolve, 20));
+            progressElement.style.width = `${i}%`;
+        }
     }
-} catch (error) {
-    statusMessage.textContent = error.error || 'An unexpected error occurred.';
-    statusMessage.classList.add('error');
-} finally {
-    progressBar.style.display = 'none';
-    loginButton.disabled = false;
-    loginButton.textContent = 'Sign in';
-}
-});
-
-async function simulateProgress() {
-    const totalSteps = 100;
-    for (let i = 0; i <= totalSteps; i++) {
-        await new Promise(resolve => setTimeout(resolve, 20));
-        progressElement.style.width = `${i}%`;
-    }
-}
 
     // Add floating labels
     const inputs = document.querySelectorAll('input');

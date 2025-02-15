@@ -2,99 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Admin Dashboard | IT FOR Youth Ghana Voting Platform</title>
-    <link rel="stylesheet" href="../css/admin-dashboard-styles.css">
-    <link rel="shortcut icon" href="../images/Asset-1.png" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="../css/admin-dashboard-styles.css" rel="stylesheet">
+    <link href="../images/Asset-1.png" rel="shortcut icon" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://kit.fontawesome.com/9083b7c357.js" crossorigin="anonymous"></script>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/9083b7c357.js"></script>
 </head>
 <body>
-    <div class="dashboard-container">
-        <nav class="sidebar">
-            <div class="logo">
-                <img src="../images/Asset-1.png" alt="IT FOR Youth Ghana Logo">
-                <h2>IT FOR Youth Ghana</h2>
+<div class="dashboard-container">
+    <nav class="sidebar">
+        <div class="logo">
+            <img alt="IT FOR Youth Ghana Logo" src="../images/Asset-1.png">
+            <h2>IT FOR Youth Ghana</h2>
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li><a href="#"><i class="fas fa-vote-yea"></i> Voting</a></li>
+            <li><a href="./manage-candidates.html"><i class="fas fa-users"></i> Candidates</a></li>
+            <li><a href="#"><i class="fas fa-chart-bar"></i> Results</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+            <li><a href="./manage-events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
+            <li><a href="./manage-category.html"><i class="fas fa-list"></i> Categories</a></li>
+            <li><a href="#"><i class="fas fa-user"></i> Users</a></li>
+        </ul>
+    </nav>
+    <main class="main-content">
+        <header>
+            <h1>Admin Dashboard</h1>
+            <div class="user-info">
+                <img alt="Admin User" src="../images/placeholder-user.jpg">
+                <span>Admin User</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
-            <ul class="nav-links">
-                <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
-                <li><a href="#"><i class="fas fa-vote-yea"></i> Voting</a></li>
-                <li><a href="#"><i class="fas fa-users"></i> Candidates</a></li>
-                <li><a href="#"><i class="fas fa-chart-bar"></i> Results</a></li>
-                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
-                <li><a href="./manage-events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
-                <li><a href="#"><i class="fas fa-list"></i> Categories</a></li>
-                <li><a href="#"><i class="fas fa-user"></i> Users</a></li>
-            </ul>
-        </nav>
-        <main class="main-content">
-            <header>
-                <h1>Admin Dashboard</h1>
-                <div class="user-info">
-                    <img src="../images/placeholder-user.jpg" alt="Admin User">
-                    <span>Admin User</span>
-                    <i class="fas fa-chevron-down"></i>
+        </header>
+        <div class="dashboard-grid">
+            <section class="quick-stats">
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <div>
+                        <h3>Total Users</h3>
+                        <p id="totalUsers">Loading...</p>
+                    </div>
                 </div>
-            </header>
-            <div class="dashboard-grid">
-                <section class="quick-stats">
-                    <div class="stat-card">
-                        <i class="fas fa-users"></i>
-                        <div>
-                            <h3>Total Users</h3>
-                            <p id="totalUsers">Loading...</p>
-                        </div>
+                <div class="stat-card">
+                    <i class="fas fa-vote-yea"></i>
+                    <div>
+                        <h3>Total Votes</h3>
+                        <p id="totalVotes">Loading...</p>
                     </div>
-                    <div class="stat-card">
-                        <i class="fas fa-vote-yea"></i>
-                        <div>
-                            <h3>Total Votes</h3>
-                            <p id="totalVotes">Loading...</p>
-                        </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <div>
+                        <h3>Active Events</h3>
+                        <p id="activeEvents">Loading...</p>
                     </div>
-                    <div class="stat-card">
-                        <i class="fas fa-calendar-check"></i>
-                        <div>
-                            <h3>Active Events</h3>
-                            <p id="activeEvents">Loading...</p>
-                        </div>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-user-tie"></i>
+                    <div>
+                        <h3>Candidates</h3>
+                        <p id="totalCandidates">Loading...</p>
                     </div>
-                    <div class="stat-card">
-                        <i class="fas fa-user-tie"></i>
-                        <div>
-                            <h3>Candidates</h3>
-                            <p id="totalCandidates">Loading...</p>
-                        </div>
-                    </div>
-                </section>
-                <section class="chart-container">
-                    <h3>Voting Statistics</h3>
-                    <canvas id="votesChart"></canvas>
-                </section>
-                <section class="chart-container">
-                    <h3>User Growth</h3>
-                    <canvas id="usersChart"></canvas>
-                </section>
-                <section class="chart-container">
-                    <h3>Event Participation</h3>
-                    <canvas id="eventsChart"></canvas>
-                </section>
-                <section class="recent-activity">
-                    <h3>Recent Activity</h3>
-                    <ul id="activityList">
-                        <!-- Activity items will be dynamically added here -->
-                    </ul>
-                </section>
-                <section class="upcoming-events">
-                    <h3>Upcoming Events</h3>
-                    <ul id="upcomingEventsList">
-                        <!-- Upcoming events will be dynamically added here -->
-                    </ul>
-                </section>
-            </div>
-        </main>
-    </div>
-    <script src="../js/dashboard.js"></script>
+                </div>
+            </section>
+            <section class="chart-container">
+                <h3>Voting Statistics</h3>
+                <canvas id="votesChart"></canvas>
+            </section>
+            <section class="chart-container">
+                <h3>User Growth</h3>
+                <canvas id="usersChart"></canvas>
+            </section>
+            <section class="chart-container">
+                <h3>Event Participation</h3>
+                <canvas id="eventsChart"></canvas>
+            </section>
+            <section class="recent-activity">
+                <h3>Recent Activity</h3>
+                <ul id="activityList">
+                    <!-- Activity items will be dynamically added here -->
+                </ul>
+            </section>
+            <section class="upcoming-events">
+                <h3>Upcoming Events</h3>
+                <ul id="upcomingEventsList">
+                    <!-- Upcoming events will be dynamically added here -->
+                </ul>
+            </section>
+        </div>
+    </main>
+</div>
+<script src="../js/dashboard.js"></script>
 </body>
 </html>

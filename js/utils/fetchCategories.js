@@ -36,7 +36,7 @@ export async function fetchCategories() {
                 categoryList.appendChild(categoryCard);
             });
 
-            if (formattedCategories.length === 0){
+            if (formattedCategories.length === 0) {
                 const notice = emptyNotice("categories", "No categories available");
                 categoryList.appendChild(notice);
             }
