@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Admin Dashboard | IT For Youth Ghana</title>
+    <link rel="shortcut icon" href="../../images/Asset-1.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9083b7c357.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',   // Sapphire blue
+                        secondary: '#10B981', // Emerald green
+                        luxury: '#1F2937',    // Dark slate
+                        gold: '#D4AF37',      // Metallic gold
+                        platinum: '#E5E7EB',  // Soft platinum
+                        accent: '#F9FAFB',    // Soft white
+                    },
+                    fontFamily: { inter: ['Inter', 'sans-serif'] },
+                    boxShadow: {
+                        'premium': '0 6px 20px rgba(0, 0, 0, 0.15)',
+                        'modal': '0 15px 40px rgba(0, 0, 0, 0.25)',
+                    },
+                    backgroundImage: {
+                        'gradient-premium': 'linear-gradient(135deg, #1E3A8A 0%, #10B981 100%)',
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        slideIn: {
+                            'from': { opacity: '0', transform: 'translateY(20px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            'from': { opacity: '0', transform: 'scale(0.95)' },
+                            'to': { opacity: '1', transform: 'scale(1)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .sidebar {
+            background: linear-gradient(180deg, #1F2937, #1E3A8A);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #F9FAFB;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: #10B981;
+            color: #1F2937;
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .nav-item.active {
+            background-color: #1E3A8A;
+            border-left: 4px solid #D4AF37;
+            color: #F9FAFB;
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .table-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .modal {
+            animation: fadeIn 0.3s ease-out;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .chart-wrapper {
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #10B981 #E5E7EB;
+        }
+        .chart-wrapper::-webkit-scrollbar {
+            height: 8px;
+        }
+        .chart-wrapper::-webkit-scrollbar-track {
+            background: #E5E7EB;
+            border-radius: 4px;
+        }
+        .chart-wrapper::-webkit-scrollbar-thumb {
+            background: #10B981;
+            border-radius: 4px;
+        }
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        .input-label {
+            position: relative;
+        }
+        .input-label input,
+        .input-label select,
+        .input-label textarea {
+            transition: all 0.2s ease;
+        }
+        .input-label input:focus + .label-text,
+        .input-label select:focus + .label-text,
+        .input-label textarea:focus + .label-text,
+        .input-label input:not(:placeholder-shown) + .label-text,
+        .input-label select:not(:placeholder-shown) + .label-text,
+        .input-label textarea:not(:placeholder-shown) + .label-text {
+            transform: translateY(-1.5rem);
+            font-size: 0.75rem;
+            color: #10B981;
+        }
+        .label-text {
+            position: absolute;
+            top: 0.75rem;
+            left: 1rem;
+            color: #6B7280;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-platinum font-inter">
+<div class="dashboard-container flex min-h-screen">
+    <!-- Sidebar -->
+    <nav class="sidebar flex-shrink-0 w-60 text-white shadow-xl transition-all duration-300">
+        <div class="logo flex items-center p-6 border-b border-gray-700/50">
+            <a href="../../index.html" class="flex items-center">
+                <img src="../../images/Asset-1.png" alt="IT For Youth Ghana Logo" class="w-10 h-10 mr-3">
+                <h2 class="text-xl font-bold tracking-tight">IT For Youth Ghana</h2>
+            </a>
+        </div>
+        <ul class="nav-links p-4 space-y-2">
+            <li><a href="../dashboard.html" class="nav-item"><i class="fas fa-home mr-2 text-lg"></i> Dashboard</a></li>
+            <li><a href="voting.html" class="nav-item active"><i class="fas fa-vote-yea mr-2 text-lg"></i> Voting</a></li>
+            <li><a href="manage-candidates.html" class="nav-item"><i class="fas fa-users mr-2 text-lg"></i> Candidates</a></li>
+            <li><a href="results.html" class="nav-item"><i class="fas fa-chart-bar mr-2 text-lg"></i> Results</a></li>
+            <li><a href="balance-board.html" class="nav-item"><i class="fas fa-wallet mr-2 text-lg"></i> Balance Board</a></li>
+            <li><a href="settings.html" class="nav-item"><i class="fas fa-cog mr-2 text-lg"></i> Settings</a></li>
+            <li><a href="manage-events.html" class="nav-item"><i class="fas fa-calendar-alt mr-2 text-lg"></i> Events</a></li>
+            <li><a href="manage-category.html" class="nav-item"><i class="fas fa-list mr-2 text-lg"></i> Categories</a></li>
+            <li><a href="manage-nominations.html" class="nav-item"><i class="fas fa-award mr-2 text-lg"></i> Nominations</a></li>
+            <li><a href="manage-users.html" class="nav-item"><i class="fas fa-user mr-2 text-lg"></i> Users</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="content flex-1 p-6 max-w-7xl mx-auto">
+        <header class="flex flex-col sm:flex-row justify-between items-center mb-8 space-y-4 sm:space-y-0 border-b border-gray-200 pb-4">
+            <h1 class="text-5xl font-extrabold text-luxury tracking-tight">Voting Admin Dashboard</h1>
+            <div class="flex space-x-4">
+                <button id="createBundleBtn" class="btn bg-gradient-premium text-white font-semibold py-2 px-6 rounded-full shadow-premium"><i class="fas fa-plus mr-2"></i>Create Vote Bundle</button>
+                <button id="createPromoBtn" class="btn bg-gold text-luxury font-semibold py-2 px-6 rounded-full shadow-premium"><i class="fas fa-tag mr-2"></i>Create Promo Code</button>
+            </div>
+        </header>
+
+        <!-- Notification -->
+        <div id="notification" class="fixed top-6 right-6 hidden z-50 bg-luxury/90 text-white p-4 rounded-full shadow-premium flex items-center space-x-4">
+            <span id="notificationMessage" class="font-medium"></span>
+            <button id="closeNotification" class="text-white hover:text-gold"><i class="fas fa-times"></i></button>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="text-center text-luxury mb-8 animate-pulse-slow">
+            <i class="fas fa-spinner fa-spin text-3xl"></i>
+            <p class="mt-2 font-medium">Loading data...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="hidden text-center text-red-600 mb-8"></div>
+
+        <!-- Vote Statistics -->
+        <section id="vote-stats" class="grid md:grid-cols-2 gap-6 mb-8">
+            <!-- Event Votes Chart -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <h2 class="text-xl font-semibold text-primary mb-4">Votes by Event</h2>
+                <div class="chart-wrapper px-4">
+                    <canvas id="eventVotesChart" class="min-w-[600px] max-w-full" style="height: 250px;"></canvas>
+                </div>
+            </div>
+            <!-- Category Votes Chart -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-primary">Votes by Category</h2>
+                    <select id="eventSelect" class="p-2 rounded-lg bg-platinum shadow-sm focus:ring-0 focus:shadow-md">
+                        <option value="">Select Event</option>
+                    </select>
+                </div>
+                <div class="chart-wrapper px-4">
+                    <canvas id="categoryVotesChart" class="min-w-[600px] max-w-full" style="height: 250px;"></canvas>
+                </div>
+            </div>
+            <!-- Candidate Votes Chart -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-primary">Votes by Candidate</h2>
+                    <select id="categorySelect" class="p-2 rounded-lg bg-platinum shadow-sm focus:ring-0 focus:shadow-md">
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+                <div class="chart-wrapper px-4">
+                    <canvas id="candidateVotesChart" class="min-w-[600px] max-w-full" style="height: 250px;"></canvas>
+                </div>
+            </div>
+            <!-- Vote Growth Chart -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <h2 class="text-xl font-semibold text-primary mb-4">Vote Growth Over Time</h2>
+                <div class="chart-wrapper px-4">
+                    <canvas id="voteGrowthChart" class="min-w-[600px] max-w-full" style="height: 250px;"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vote Bundles -->
+        <section id="vote-bundles" class="bg-white/90 p-6 rounded-lg shadow-premium mb-8 animate-slide-in">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-primary">Vote Bundles</h2>
+                <button id="refreshBundlesBtn" class="btn bg-platinum text-luxury font-semibold py-2 px-4 rounded-full hover:bg-secondary hover:text-white"><i class="fas fa-refresh mr-2"></i>Refresh</button>
+            </div>
+            <div class="overflow-x-auto rounded-lg border border-gray-100">
+                <table class="min-w-full">
+                    <thead class="bg-gradient-premium text-white table-header">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Event</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Categories</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Votes</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Price/Vote</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Discount</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="bundlesTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Promo Codes -->
+        <section id="promo-codes" class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-semibold text-primary">Promo Codes</h2>
+                <button id="refreshPromosBtn" class="btn bg-platinum text-luxury font-semibold py-2 px-4 rounded-full hover:bg-secondary hover:text-white"><i class="fas fa-refresh mr-2"></i>Refresh</button>
+            </div>
+            <div class="overflow-x-auto rounded-lg border border-gray-100">
+                <table class="min-w-full">
+                    <thead class="bg-gradient-premium text-white table-header">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Code</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Discount</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Expires At</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Description</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody id="promosTableBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Vote Bundle Modal -->
+        <div id="bundleModal" class="fixed inset-0 bg-luxury/75 hidden flex items-center justify-center z-50">
+            <div class="bg-white/90 p-8 rounded-lg shadow-modal w-full max-w-xl modal">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 id="bundleModalTitle" class="text-2xl font-bold text-luxury">Create Vote Bundle</h2>
+                    <button id="closeBundleModal" class="text-luxury hover:text-gold"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                <form id="bundleForm" class="grid grid-cols-1 gap-6">
+                    <div class="input-label">
+                        <input type="text" id="bundleName" name="name" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
+                        <span class="label-text">Bundle Name</span>
+                    </div>
+                    <div class="input-label">
+                        <select id="bundleEvent" name="event_id" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" required>
+                            <option value="">Select Event</option>
+                        </select>
+                        <span class="label-text">Event</span>
+                    </div>
+                    <div class="input-label">
+                        <select id="bundleCategories" name="category_ids" multiple class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm">
+                            <option value="">Select Categories</option>
+                        </select>
+                        <span class="label-text">Categories</span>
+                    </div>
+                    <div class="input-label">
+                        <input type="number" id="votesInBundle" name="votes_in_bundle" min="1" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
+                        <span class="label-text">Votes in Bundle</span>
+                    </div>
+                    <div class="input-label">
+                        <input type="number" id="pricePerVote" name="price_per_vote" min="0" step="0.01" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
+                        <span class="label-text">Price per Vote</span>
+                    </div>
+                    <div class="input-label">
+                        <input type="number" id="bundleDiscount" name="discount" min="0" max="100" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" ">
+                        <span class="label-text">Discount (%)</span>
+                    </div>
+                    <div class="input-label">
+                        <input type="text" id="bundlePromoCode" name="promo_code" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" ">
+                        <span class="label-text">Promo Code</span>
+                    </div>
+                    <div class="flex items-center">
+                        <input type="checkbox" id="bundleActive" name="active" class="h-5 w-5 text-secondary focus:ring-0" checked>
+                        <label for="bundleActive" class="ml-2 text-luxury font-medium">Active</label>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button type="submit" class="btn bg-gradient-premium text-white font-semibold py-3 px-6 rounded-full shadow-premium">Save</button>
+                        <button type="button" id="cancelBundleBtn" class="btn bg-platinum text-luxury font-semibold py-3 px-6 rounded-full hover:bg-gray-200">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Promo Code Modal -->
+        <div id="promoModal" class="fixed inset-0 bg-luxury/75 hidden flex items-center justify-center z-50">
+            <div class="bg-white/90 p-8 rounded-lg shadow-modal w-full max-w-xl modal">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 id="promoModalTitle" class="text-2xl font-bold text-luxury">Create Promo Code</h2>
+                    <button id="closePromoModal" class="text-luxury hover:text-gold"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                <form id="promoForm" class="grid grid-cols-1 gap-6">
+                    <div class="input-label">
+                        <input type="text" id="promoCode" name="code" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
+                        <span class="label-text">Code</span>
+                    </div>
+                    <div class="input-label">
+                        <input type="number" id="discount" name="discount" min="0" max="100" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
+                        <span class="label-text">Discount (%)</span>
+                    </div>
+                    <div class="input-label">
+                        <input type="datetime-local" id="expirationDate" name="expiration_date" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" required>
+                        <span class="label-text">Expires At</span>
+                    </div>
+                    <div class="input-label">
+                        <textarea id="promoDescription" name="description" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm"></textarea>
+                        <span class="label-text">Description</span>
+                    </div>
+                    <div class="input-label">
+                        <input type="number" id="usageLimit" name="usage_limit" min="1" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" ">
+                        <span class="label-text">Usage Limit</span>
+                    </div>
+                    <div class="input-label">
+                        <select id="applicableBundles" name="applicable_bundle_ids" multiple class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm">
+                            <option value="">Select Bundles</option>
+                        </select>
+                        <span class="label-text">Applicable Bundles</span>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button type="submit" class="btn bg-gradient-premium text-white font-semibold py-3 px-6 rounded-full shadow-premium">Save</button>
+                        <button type="button" id="cancelPromoBtn" class="btn bg-platinum text-luxury font-semibold py-3 px-6 rounded-full hover:bg-gray-200">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Promo Details Modal -->
+        <div id="promoDetailsModal" class="fixed inset-0 bg-luxury/75 hidden flex items-center justify-center z-50">
+            <div class="bg-white/90 p-8 rounded-lg shadow-modal w-full max-w-xl modal">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-luxury">Promo Code Details</h2>
+                    <button id="closePromoDetailsModal" class="text-luxury hover:text-gold"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                <div id="promoDetailsContent" class="space-y-4 text-luxury text-sm"></div>
+                <div class="mt-6">
+                    <button type="button" id="closePromoDetailsModal" class="btn bg-platinum text-luxury font-semibold py-3 px-6 rounded-full hover:bg-gray-200 w-full">Close</button>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<script type="module" src="../../js/voting.js"></script>
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'936117bcab597ba0',t:'MTc0NTYxODIxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
+</html>

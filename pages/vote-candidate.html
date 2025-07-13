@@ -2,72 +2,266 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vote for Your Candidate - IT For Youth Ghana</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="../css/vote-candidate.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/9083b7c357.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#34D399',
+                        accent: '#F9FAFB',
+                        dark: '#111827',
+                        vibrant: '#F59E0B',
+                    },
+                    fontFamily: { poppins: ['Poppins', 'sans-serif'] },
+                },
+            },
+        }
+    </script>
+    <style>
+        .bundle-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .bundle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .bundle-card.selected {
+            border-color: #34D399;
+            background-color: rgba(52, 211, 153, 0.1);
+        }
+        .bundle-info {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .bundle-card:hover .bundle-info {
+            max-height: 200px;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #111827;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        .select2-container {
+            width: 100% !important;
+        }
+        .select2-selection--multiple {
+            border-radius: 0.5rem !important;
+            border-color: #D1D5DB !important;
+        }
+        .select2-container--focus .select2-selection--multiple {
+            border-color: #34D399 !important;
+            box-shadow: 0 0 0 2px rgba(52, 211, 153, 0.25);
+        }
+    </style>
 </head>
-<body>
-<div id="background-overlay"></div>
-<header>
-    <nav>
-        <div class="logo">
-            <img alt="IT For Youth Ghana Logo" src="/images/Asset-1.png">
-            <span>IT For Youth Ghana</span>
+<body class="font-poppins">
+<div id="background-overlay" class="fixed inset-0 bg-cover bg-center opacity-20 z-0"></div>
+<header class="relative z-10 bg-white shadow">
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="logo flex items-center">
+            <img alt="IT For Youth Ghana Logo" src="../images/Asset-1.png" class="h-10 w-auto mr-3">
+            <span class="font-bold text-lg text-dark">IT For Youth Ghana</span>
         </div>
-        <ul class="nav-links">
-            <li><a href="../index.html">Home</a></li>
-            <li><a href="../index.html#events">Events</a></li>
-            <li><a href="../index.html#categories">Categories</a></li>
-            <li><a class="active" href="#">Vote</a></li>
+        <ul class="nav-links flex space-x-6">
+            <li><a href="../index.html" class="text-dark hover:text-secondary">Home</a></li>
+            <li><a href="../index.html#events" class="text-dark hover:text-secondary">Events</a></li>
+            <li><a href="../index.html#categories" class="text-dark hover:text-secondary">Categories</a></li>
+            <li><a href="#" class="text-dark font-semibold border-b-2 border-primary">Vote</a></li>
         </ul>
     </nav>
 </header>
 
-<main>
-    <div class="event-info" id="event-info">
-        <h1 id="event-name"></h1>
+<main class="relative z-10 container mx-auto px-6 py-12">
+    <div class="event-info bg-white p-6 rounded-lg shadow-md mb-8" id="event-info">
+        <h1 id="event-name" class="text-3xl font-bold text-dark"></h1>
     </div>
-    <h2>Cast Your Vote</h2>
-    <div class="candidate-info" id="candidate-info">
-        <img alt="Candidate" class="candidate-image" id="candidate-image" src="/placeholder.svg">
-        <h3 class="candidate-name" id="candidate-name"></h3>
-        <p class="candidate-description" id="candidate-description"></p>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <!-- Candidate Info and Voting Form -->
+        <div>
+            <h2 class="text-2xl font-semibold text-dark mb-4">Cast Your Vote</h2>
+            <div class="candidate-info bg-white p-6 rounded-lg shadow-md mb-6" id="candidate-info">
+                <div class="flex items-center mb-4">
+                    <img alt="Candidate" class="candidate-image w-16 h-16 rounded-full mr-4" id="candidate-image" src="../images/placeholder-user.jpg" crossorigin="anonymous">
+                    <div>
+                        <h3 class="candidate-name text-xl font-semibold text-dark" id="candidate-name"></h3>
+                        <p class="text-vibrant font-medium" id="candidate-votes">Votes: 0</p>
+                    </div>
+                </div>
+                <p class="candidate-description text-gray-600" id="candidate-description"></p>
+            </div>
+
+            <form class="vote-form bg-white p-6 rounded-lg shadow-md" id="vote-form">
+                <div class="form-group mb-4">
+                    <p class="text-sm text-gray-600 mb-2">Select a category to view available vote bundles. Bundles will be displayed below.</p>
+                    <label for="category-select" class="block text-dark font-medium mb-1">Select Category:</label>
+                    <select id="category-select" class="w-full p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary" required>
+                        <option value="">Choose a category</option>
+                    </select>
+                    <div id="category-loading" class="hidden text-gray-500 mt-2">
+                        <i class="fas fa-spinner fa-spin mr-2"></i>Loading bundles...
+                    </div>
+                </div>
+
+                <div class="form-group mb-6">
+                    <label class="block text-dark font-medium mb-2">Select Vote Bundles:</label>
+                    <div id="no-bundles-message" class="hidden text-gray-500 p-4 bg-gray-100 rounded-lg mb-4">
+                        No vote bundles are available for the selected category.
+                    </div>
+                    <div id="vote-bundles" class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <!-- Vote bundles will be dynamically added here -->
+                    </div>
+
+                    <div class="mt-4">
+                        <label for="bundle-select" class="block text-dark font-medium mb-1">Or Select Multiple Bundles:</label>
+                        <select id="bundle-select" class="w-full p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary" multiple>
+                            <!-- Bundle options will be added here -->
+                        </select>
+                    </div>
+                </div>
+
+                <div id="selected-bundles" class="mb-6">
+                    <!-- Selected bundles with quantity inputs will appear here -->
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="payment-reference" class="block text-dark font-medium mb-1">
+                        Payment Reference Code (Optional):
+                        <span class="tooltip ml-1">
+                            <i class="fas fa-info-circle text-gray-400"></i>
+                            <span class="tooltip-text">Enter the reference code from your payment transaction to manually cast votes if payment was made separately</span>
+                        </span>
+                    </label>
+                    <input id="payment-reference" type="text" class="w-full p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary" placeholder="Enter payment reference code">
+                </div>
+
+                <div class="form-group mb-4">
+                    <label for="email" class="block text-dark font-medium mb-1">
+                        Email:
+                        <span class="tooltip ml-1">
+                            <i class="fas fa-info-circle text-gray-400"></i>
+                            <span class="tooltip-text">Enter your email to receive payment receipts and vote confirmation</span>
+                        </span>
+                    </label>
+                    <input id="email" type="email" class="w-full p-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-secondary" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group mb-6">
+                    <div class="bg-gray-100 p-4 rounded-lg">
+                        <div class="flex justify-between mb-2">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">GHS 0.00</span>
+                        </div>
+                        <div class="flex justify-between mb-2">
+                            <span>Discount:</span>
+                            <span id="discount-amount">GHS 0.00</span>
+                        </div>
+                        <div class="flex justify-between font-bold">
+                            <span>Total:</span>
+                            <span id="total-amount">GHS 0.00</span>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="vote-button bg-primary text-white font-semibold py-2 px-6 rounded-lg hover:bg-secondary hover:text-dark transition duration-300 w-full" id="vote-button" type="submit" disabled>Vote Now</button>
+            </form>
+        </div>
+
+        <!-- Live Votes Graph and QR Code -->
+        <div class="space-y-8">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold text-primary mb-4">Live Vote Trend</h2>
+                <canvas id="voteTrendChart" class="w-full h-64"></canvas>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold text-primary mb-4">Share Voting Link</h2>
+                <div class="flex items-center justify-between">
+                    <div id="qr-code" class="flex-shrink-0"></div>
+                    <div class="flex space-x-4">
+                        <button id="share-facebook" class="text-dark hover:text-secondary" title="Share on Facebook"><i class="fab fa-facebook-f text-2xl"></i></button>
+                        <button id="share-twitter" class="text-dark hover:text-secondary" title="Share on Twitter"><i class="fa-brands fa-x-twitter text-2xl"></i></button>
+                        <button id="share-linkedin" class="text-dark hover:text-secondary" title="Share on LinkedIn"><i class="fab fa-linkedin-in text-2xl"></i></button>
+                    </div>
+                </div>
+                <p class="text-gray-600 mt-4">Scan or share this QR code to invite others to vote!</p>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-2xl font-semibold text-primary mb-4">Recent Votes</h2>
+                <ul id="vote-history" class="space-y-2 text-gray-600"></ul>
+            </div>
+        </div>
     </div>
-    <form class="vote-form" id="vote-form">
-        <div class="form-group">
-            <label for="category-select">Select Category:</label>
-            <select id="category-select" required>
-                <option value="">Choose a category</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="vote-count">Number of Votes:</label>
-            <input id="vote-count" min="1" required type="number">
-        </div>
-        <button class="vote-button" disabled id="vote-button" type="submit">Vote</button>
-    </form>
 </main>
 
-<footer>
-    <p>&copy; 2024 IT For Youth Ghana. All rights reserved.</p>
+<footer class="relative z-10 bg-dark text-white py-6 text-center">
+    <p>© 2025 IT For Youth Ghana. All rights reserved.</p>
 </footer>
 
-<div class="modal" id="vote-modal">
-    <div class="modal-content">
-        <h2>Confirm Your Vote</h2>
-        <p>Are you sure you want to cast <span id="vote-count-confirm"></span> vote(s) for <span
-                id="candidate-name-confirm"></span> in the <span id="category-name-confirm"></span> category?</p>
-        <div class="modal-buttons">
-            <button class="btn btn-primary" id="confirm-vote">Confirm Vote</button>
-            <button class="btn btn-secondary" id="cancel-vote">Cancel</button>
+<div class="modal fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden z-50" id="vote-modal">
+    <div class="modal-content bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-2xl font-semibold text-dark mb-4">Confirm Your Vote</h2>
+        <div id="vote-summary" class="text-gray-600 mb-6">
+            <!-- Vote summary will be dynamically added here -->
+        </div>
+        <div class="modal-buttons flex justify-end space-x-4">
+            <button class="btn bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary hover:text-dark" id="confirm-vote">Confirm Vote</button>
+            <button class="btn bg-gray-300 text-dark py-2 px-4 rounded-lg hover:bg-gray-400" id="cancel-vote">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Bundle Info Modal -->
+<div class="modal fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center hidden z-50" id="bundle-info-modal">
+    <div class="modal-content bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-2xl font-semibold text-dark" id="bundle-info-title">Bundle Details</h2>
+            <button class="text-gray-500 hover:text-gray-700 text-xl" id="close-bundle-info">&times;</button>
+        </div>
+        <div id="bundle-info-content" class="text-gray-600 mb-6">
+            <!-- Bundle details will be dynamically added here -->
+        </div>
+        <div class="modal-buttons flex justify-end">
+            <button class="btn bg-primary text-white py-2 px-4 rounded-lg hover:bg-secondary hover:text-dark" id="select-bundle">Select Bundle</button>
         </div>
     </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.5.0/lib/qr-code-styling.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script src="../js/vote.js" type="module"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9356ac377a987b9a',t:'MTc0NTUwODk0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
 </body>
 </html>
-

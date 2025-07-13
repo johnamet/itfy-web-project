@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Events | IT For Youth Ghana</title>
+    <title>Manage Users | IT For Youth Ghana</title>
     <link rel="shortcut icon" href="../../images/Asset-1.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/9083b7c357.js" crossorigin="anonymous"></script>
@@ -83,16 +83,13 @@
             position: relative;
         }
         .input-label input,
-        .input-label select,
-        .input-label textarea {
+        .input-label select {
             transition: all 0.2s ease;
         }
         .input-label input:focus + .label-text,
         .input-label select:focus + .label-text,
-        .input-label textarea:focus + .label-text,
         .input-label input:not(:placeholder-shown) + .label-text,
-        .input-label select:not(:placeholder-shown) + .label-text,
-        .input-label textarea:not(:placeholder-shown) + .label-text {
+        .input-label select:not(:placeholder-shown) + .label-text {
             transform: translateY(-1.5rem);
             font-size: 0.75rem;
             color: #10B981;
@@ -108,14 +105,6 @@
         .table-responsive {
             width: 100%;
             max-width: 100%;
-        }
-        .tab-button {
-            transition: all 0.3s ease;
-        }
-        .tab-button.active {
-            background-color: #10B981;
-            color: #1F2937;
-            border-bottom: 3px solid #D4AF37;
         }
     </style>
 </head>
@@ -136,18 +125,18 @@
             <li><a href="results.html" class="nav-item"><i class="fas fa-chart-bar mr-2 text-lg"></i> Results</a></li>
             <li><a href="balance-board.html" class="nav-item"><i class="fas fa-wallet mr-2 text-lg"></i> Balance Board</a></li>
             <li><a href="settings.html" class="nav-item"><i class="fas fa-cog mr-2 text-lg"></i> Settings</a></li>
-            <li><a href="manage-events.html" class="nav-item active"><i class="fas fa-calendar-alt mr-2 text-lg"></i> Events</a></li>
+            <li><a href="manage-events.html" class="nav-item"><i class="fas fa-calendar-alt mr-2 text-lg"></i> Events</a></li>
             <li><a href="manage-category.html" class="nav-item"><i class="fas fa-list mr-2 text-lg"></i> Categories</a></li>
             <li><a href="manage-nominations.html" class="nav-item"><i class="fas fa-award mr-2 text-lg"></i> Nominations</a></li>
-            <li><a href="manage-users.html" class="nav-item"><i class="fas fa-user mr-2 text-lg"></i> Users</a></li>
+            <li><a href="manage-users.html" class="nav-item active"><i class="fas fa-user mr-2 text-lg"></i> Users</a></li>
         </ul>
     </nav>
 
     <!-- Main Content -->
     <main class="flex-1 p-8 max-w-7xl mx-auto">
         <header class="flex justify-between items-center mb-8 border-b border-gray-200 pb-4">
-            <h1 class="text-3xl font-bold text-luxury">Manage Events</h1>
-            <button id="createEventBtn" class="btn bg-gradient-premium text-white font-semibold py-2 px-6 rounded-full shadow-premium">Create New Event</button>
+            <h1 class="text-3xl font-bold text-luxury">Manage Users</h1>
+            <button id="createUserBtn" class="btn bg-gradient-premium text-white font-semibold py-2 px-6 rounded-full shadow-premium">Add New User</button>
         </header>
 
         <!-- Notification -->
@@ -156,100 +145,63 @@
             <button id="closeNotification" class="text-white hover:text-gold"><i class="fas fa-times"></i></button>
         </div>
 
-        <!-- Event Tables -->
-        <section class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in backdrop-blur-md">
-            <div class="flex space-x-4 mb-4">
-                <button class="tab-button active px-4 py-2 font-semibold text-luxury rounded-t-lg" data-tab="active">Active Events</button>
-                <button class="tab-button px-4 py-2 font-semibold text-luxury rounded-t-lg" data-tab="upcoming">Upcoming Events</button>
-                <button class="tab-button px-4 py-2 font-semibold text-luxury rounded-t-lg" data-tab="archived">Archived Events</button>
-            </div>
+        <!-- Users List -->
+        <section id="users-list" class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in backdrop-blur-md">
+            <h2 class="text-xl font-semibold text-primary mb-4">Users</h2>
             <div class="table-responsive">
                 <table class="w-full divide-y divide-gray-200">
                     <thead class="bg-platinum">
                     <tr>
-                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Event Name</th>
-                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Created Date</th>
-                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Start Date</th>
-                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">End Date</th>
-                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Profile</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Name</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Role</th>
                         <th class="px-6 py-4 text-right text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
                     </tr>
                     </thead>
-                    <tbody id="eventsTable" class="divide-y divide-gray-200"></tbody>
+                    <tbody id="usersTable" class="divide-y divide-gray-200"></tbody>
                 </table>
             </div>
-            <div id="events-pagination" class="mt-6 flex justify-center space-x-2"></div>
+            <div id="users-pagination" class="mt-6 flex justify-center space-x-2"></div>
         </section>
 
-        <!-- Event Form -->
-        <section id="event-form" class="bg-white/90 p-6 rounded-lg shadow-premium hidden animate-fade-in mt-6 backdrop-blur-md">
-            <h2 id="formTitle" class="text-xl font-semibold text-primary mb-6">Create New Event</h2>
-            <form id="eventFormElement">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- User Form -->
+        <section id="user-form" class="bg-white/90 p-6 rounded-lg shadow-premium hidden animate-fade-in mt-6 backdrop-blur-md">
+            <h2 id="formTitle" class="text-xl font-semibold text-primary mb-6">Add New User</h2>
+            <form id="userFormElement">
+                <div class="space-y-8">
                     <div class="input-label">
-                        <input type="text" id="eventName" name="eventName" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
-                        <span class="label-text">Event Name</span>
+                        <input type="text" id="userName" name="userName" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
+                        <span class="label-text">Full Name</span>
                     </div>
                     <div class="input-label">
-                        <input type="date" id="eventStartDate" name="eventStartDate" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
-                        <span class="label-text">Event Start Date</span>
+                        <input type="email" id="userEmail" name="userEmail" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
+                        <span class="label-text">Email</span>
                     </div>
                     <div class="input-label">
-                        <input type="time" id="eventStartTime" name="eventStartTime" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
-                        <span class="label-text">Event Start Time</span>
-                    </div>
-                    <div class="input-label">
-                        <input type="date" id="eventEndDate" name="eventEndDate" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
-                        <span class="label-text">Event End Date</span>
-                    </div>
-                    <div class="input-label">
-                        <input type="time" id="eventEndTime" name="eventEndTime" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " required>
-                        <span class="label-text">Event End Time</span>
-                    </div>
-                    <div class="input-label">
-                        <select id="eventStatus" name="eventStatus" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" required>
-                            <option value="active">Active</option>
-                            <option value="upcoming">Upcoming</option>
-                            <option value="archived">Archived</option>
+                        <select id="userRole" name="userRole" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" required>
+                            <!-- Roles will be populated dynamically -->
                         </select>
-                        <span class="label-text">Event Status</span>
+                        <span class="label-text">Role</span>
                     </div>
-                </div>
-                <div class="mt-6 input-label">
-                    <input type="file" id="eventThumbnail" name="eventThumbnail" accept="image/*" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm">
-                    <span class="label-text">Event Thumbnail</span>
-                </div>
-                <div class="mt-6 input-label">
-                    <textarea id="eventDescription" name="eventDescription" maxlength="150" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm h-32" placeholder=" " required></textarea>
-                    <span class="label-text">Event Description</span>
-                </div>
-                <div class="mt-6">
-                    <h3 class="text-lg font-medium text-luxury mb-2">Related Events</h3>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <select id="relatedEventsDropdown" name="relatedEventsDropdown" class="flex-grow p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm"></select>
-                        <button type="button" id="addRelatedEventBtn" class="btn bg-gradient-premium text-white font-semibold py-2 px-4 rounded-full shadow-premium">Add</button>
+                    <div class="input-label">
+                        <input type="file" id="userPhoto" name="userPhoto" accept="image/*" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm">
+                        <span class="label-text">Profile Photo</span>
+                        <img crossorigin="anonymous" id="photoPreview" class="mt-2 w-24 h-24 rounded-full object-cover hidden" alt="Profile Preview">
                     </div>
-                    <div id="relatedEventsContainer" class="space-y-2"></div>
-                </div>
-                <div class="mt-6">
-                    <h3 class="text-lg font-medium text-luxury mb-2">Event Timeline</h3>
-                    <div id="timelineFieldsContainer" class="space-y-4"></div>
-                    <button type="button" id="addTimelineFieldBtn" class="mt-2 btn bg-gradient-premium text-white font-semibold py-2 px-4 rounded-full shadow-premium">Add Timeline Field</button>
-                </div>
-                <div class="mt-6">
-                    <h3 class="text-lg font-medium text-luxury mb-2">Additional Fields</h3>
-                    <div id="dynamicFieldsContainer" class="space-y-4"></div>
-                    <button type="button" id="addFieldBtn" class="mt-2 btn bg-gradient-premium text-white font-semibold py-2 px-4 rounded-full shadow-premium">Add Field</button>
+                    <div id="resetPasswordSection" class="hidden">
+                        <button type="button" id="resetPasswordBtn" class="btn bg-gradient-premium text-white font-semibold py-2 px-4 rounded-full shadow-premium">Reset Password</button>
+                    </div>
                 </div>
                 <div class="mt-8 flex justify-end space-x-4">
                     <button type="button" id="cancelBtn" class="btn bg-platinum text-luxury font-semibold py-2 px-4 rounded-full shadow-sm hover:bg-gray-200">Cancel</button>
-                    <button type="submit" id="saveBtn" class="btn bg-gradient-premium text-white font-semibold py-2 px-6 rounded-full shadow-premium">Save Event</button>
+                    <button type="submit" id="saveBtn" class="btn bg-gradient-premium text-white font-semibold py-2 px-6 rounded-full shadow-premium">Save User</button>
                 </div>
             </form>
         </section>
     </main>
 </div>
 <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
-<script src="../../js/manage-events.js" type="module"></script>
+<script src="../../js/manage-users.js" type="module"></script>
 </body>
 </html>

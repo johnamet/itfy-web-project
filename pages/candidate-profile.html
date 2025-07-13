@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Profile | IT For Youth Ghana</title>
+    <link rel="shortcut icon" href="./images/Asset-1.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9083b7c357.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#10B981',
+                        luxury: '#1F2937',
+                        gold: '#D4AF37',
+                        platinum: '#E5E7EB',
+                        accent: '#F9FAFB',
+                    },
+                    fontFamily: { inter: ['Inter', 'sans-serif'] },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            'from': { opacity: '0', transform: 'scale(0.95)' },
+                            'to': { opacity: '1', transform: 'scale(1)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .input-field {
+            transition: all 0.2s ease;
+        }
+        .input-field:focus {
+            border-color: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+        }
+        .photo-preview {
+            object-fit: cover;
+            border: 2px solid #E5E7EB;
+        }
+        .modal {
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .modal-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .modal-visible {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+    <div class="max-w-lg w-full bg-white rounded-lg shadow-md p-6">
+        <!-- Header -->
+        <header class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-semibold text-primary">Your Profile</h1>
+            <a href="/logout" class="text-sm text-primary hover:text-secondary">Logout</a>
+        </header>
+
+        <!-- Notification -->
+        <div id="notification" class="hidden mb-4 p-4 rounded-lg text-white flex items-center justify-between animate-fade-in">
+            <span id="notificationMessage" class="font-medium"></span>
+            <button id="closeNotification" class="text-white hover:text-gray-200">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="text-center text-luxury mb-6 hidden">
+            <i class="fas fa-spinner fa-spin text-2xl"></i>
+            <p class="mt-2 font-medium">Loading profile...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="hidden text-center text-red-600 mb-6 font-medium"></div>
+
+        <!-- Profile Section -->
+        <section id="profile-container" class="space-y-6">
+            <!-- Profile Photo -->
+            <div class="flex flex-col items-center">
+                <img id="profilePhoto" src="https://via.placeholder.com/150" alt="Profile Photo" class="w-32 h-32 rounded-full mb-4 photo-preview">
+                <label for="photoInput" id="photoLabel" class="btn bg-secondary text-white rounded-full px-4 py-2 cursor-not-allowed opacity-50" disabled>
+                    Change Photo
+                </label>
+                <input id="photoInput" type="file" accept="image/*" class="hidden" disabled>
+                <p class="text-sm text-gray-500 mt-2">Max size: 2MB, JPG/PNG only</p>
+            </div>
+
+            <!-- Profile Details -->
+            <div class="space-y-4">
+                <div>
+                    <h2 class="text-lg font-semibold text-luxury">Candidate ID</h2>
+                    <p id="candidateId" class="text-gray-600">Loading...</p>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold text-luxury">Name</h2>
+                    <p id="candidateName" class="text-gray-600">Loading...</p>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold text-luxury">Email</h2>
+                    <p id="candidateEmail" class="text-gray-600">Loading...</p>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold text-luxury">Phone</h2>
+                    <p id="candidatePhone" class="text-gray-600">Loading...</p>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold text-luxury">Bio</h2>
+                    <p id="candidateBio" class="text-gray-600">No bio available.</p>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold text-luxury">Created At</h2>
+                    <p id="candidateCreatedAt" class="text-gray-600">Loading...</p>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold text-luxury">Updated At</h2>
+                    <p id="candidateUpdatedAt" class="text-gray-600">Loading...</p>
+                </div>
+            </div>
+
+            <!-- Update Bio Form -->
+            <div>
+                <h3 class="text-lg font-semibold text-primary mb-2">Update Bio</h3>
+                <textarea id="bioInput" rows="4" class="w-full p-3 rounded-lg border border-gray-300 input-field focus:outline-none disabled:bg-gray-100 disabled:cursor-not-allowed" placeholder="Tell us about yourself..." disabled></textarea>
+                <p class="text-sm text-gray-500 mt-1">Max 500 characters</p>
+                <div id="updateButtons" class="flex space-x-4 mt-4 hidden">
+                    <button id="saveUpdatesBtn" class="btn bg-primary text-white rounded-full px-4 py-2 hover:bg-blue-900">Save Updates</button>
+                    <button id="cancelUpdatesBtn" class="btn bg-gray-500 text-white rounded-full px-4 py-2 hover:bg-gray-600">Cancel</button>
+                </div>
+            </div>
+
+            <!-- Update Profile Button -->
+            <button id="updateProfileBtn" class="btn bg-primary text-white rounded-full px-4 py-2 hover:bg-blue-900">Update Profile</button>
+        </section>
+    </div>
+
+    <!-- Verification Modal -->
+    <div id="verificationModal" class="modal modal-hidden fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md">
+            <h2 class="text-xl font-semibold text-primary mb-4">Enter Secret Code</h2>
+            <input id="secretCodeInput" type="password" class="w-full p-3 rounded-lg border border-gray-300 input-field focus:outline-none mb-4" placeholder="Enter your secret code">
+            <div class="flex justify-end space-x-4">
+                <button id="cancelVerifyBtn" class="btn bg-gray-500 text-white rounded-full px-4 py-2 hover:bg-gray-600">Cancel</button>
+                <button id="verifyCodeBtn" class="btn bg-secondary text-white rounded-full px-4 py-2 hover:bg-green-600">Verify</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { baseUrl } from "./utils/constants.js";
+        import { fetchData } from "./utils/fetchData.js";
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            // DOM Elements
+            const notification = document.getElementById("notification");
+            const notificationMessage = document.getElementById("notificationMessage");
+            const closeNotification = document.getElementById("closeNotification");
+            const loading = document.getElementById("loading");
+            const error = document.getElementById("error");
+            const profileContainer = document.getElementById("profile-container");
+            const profilePhoto = document.getElementById("profilePhoto");
+            const candidateId = document.getElementById("candidateId");
+            const candidateName = document.getElementById("candidateName");
+            const candidateEmail = document.getElementById("candidateEmail");
+            const candidatePhone = document.getElementById("candidatePhone");
+            const candidateBio = document.getElementById("candidateBio");
+            const candidateCreatedAt = document.getElementById("candidateCreatedAt");
+            const candidateUpdatedAt = document.getElementById("candidateUpdatedAt");
+            const bioInput = document.getElementById("bioInput");
+            const photoInput = document.getElementById("photoInput");
+            const photoLabel = document.getElementById("photoLabel");
+            const updateProfileBtn = document.getElementById("updateProfileBtn");
+            const saveUpdatesBtn = document.getElementById("saveUpdatesBtn");
+            const cancelUpdatesBtn = document.getElementById("cancelUpdatesBtn");
+            const updateButtons = document.getElementById("updateButtons");
+            const verificationModal = document.getElementById("verificationModal");
+            const secretCodeInput = document.getElementById("secretCodeInput");
+            const verifyCodeBtn = document.getElementById("verifyCodeBtn");
+            const cancelVerifyBtn = document.getElementById("cancelVerifyBtn");
+
+            let isEditingEnabled = false;
+            let pendingPhotoFile = null;
+
+            // Notification Handlers
+            closeNotification.addEventListener("click", () => {
+                notification.classList.add("hidden");
+                notification.classList.remove("bg-green-500", "bg-red-500", "animate-fade-in");
+            });
+
+            function showNotification(message, type) {
+                notificationMessage.textContent = message;
+                notification.classList.remove("hidden", "bg-green-500", "bg-red-500");
+                notification.classList.add(type === "success" ? "bg-green-500" : "bg-red-500", "animate-fade-in");
+                setTimeout(() => {
+                    notification.classList.add("hidden");
+                    notification.classList.remove("bg-green-500", "bg-red-500", "animate-fade-in");
+                }, 5000);
+            }
+
+            // Error Handler
+            function showError(message, retryFn) {
+                error.innerHTML = `
+                    <p class="text-lg font-semibold text-red-600">${message}</p>
+                    <p class="text-sm text-gray-600">Please try again later.</p>
+                    ${retryFn ? `<button id="retryBtn" class="mt-2 px-4 py-2 bg-red-500 text-white rounded-full hover:bg-red-600">Retry</button>` : ""}
+                `;
+                error.classList.remove("hidden");
+                if (retryFn) {
+                    document.getElementById("retryBtn").addEventListener("click", async () => {
+                        error.classList.add("hidden");
+                        await retryFn();
+                    });
+                }
+            }
+
+            // Modal Handlers
+            function showModal() {
+                verificationModal.classList.remove("modal-hidden");
+                verificationModal.classList.add("modal-visible");
+                secretCodeInput.focus();
+            }
+
+            function hideModal() {
+                verificationModal.classList.remove("modal-visible");
+                verificationModal.classList.add("modal-hidden");
+                secretCodeInput.value = "";
+            }
+
+            // Enable/Disable Editing
+            function enableEditing() {
+                isEditingEnabled = true;
+                bioInput.disabled = false;
+                photoInput.disabled = false;
+                photoLabel.classList.remove("cursor-not-allowed", "opacity-50");
+                photoLabel.removeAttribute("disabled");
+                updateButtons.classList.remove("hidden");
+                updateProfileBtn.classList.add("hidden");
+                showNotification("Editing enabled.", "success");
+            }
+
+            function disableEditing() {
+                isEditingEnabled = false;
+                bioInput.disabled = true;
+                photoInput.disabled = true;
+                photoLabel.classList.add("cursor-not-allowed", "opacity-50");
+                photoLabel.setAttribute("disabled", "true");
+                updateButtons.classList.add("hidden");
+                updateProfileBtn.classList.remove("hidden");
+                pendingPhotoFile = null;
+                photoInput.value = "";
+            }
+
+            // Fetch Candidate Profile
+            async function fetchCandidateProfile() {
+                try {
+                    loading.classList.remove("hidden");
+                    error.classList.add("hidden");
+                    profileContainer.classList.add("opacity-50");
+
+                    const response = await fetchData("GET", `${baseUrl}/candidate/profile`);
+                    if (!response.success) throw new Error(response.error || "Failed to load profile");
+
+                    const { candidate } = response;
+                    candidateId.textContent = candidate.id || "N/A";
+                    candidateName.textContent = candidate.name || "Unknown Candidate";
+                    candidateEmail.textContent = candidate.email || "N/A";
+                    candidatePhone.textContent = candidate.phone || "N/A";
+                    candidateBio.textContent = candidate.bio || "No bio available.";
+                    candidateCreatedAt.textContent = candidate.createdAt ? new Date(candidate.createdAt).toLocaleString() : "N/A";
+                    candidateUpdatedAt.textContent = candidate.updatedAt ? new Date(candidate.updatedAt).toLocaleString() : "N/A";
+                    bioInput.value = candidate.bio || "";
+                    profilePhoto.src = candidate.profilePhoto || "https://via.placeholder.com/150";
+
+                    loading.classList.add("hidden");
+                    profileContainer.classList.remove("opacity-50");
+                } catch (err) {
+                    loading.classList.add("hidden");
+                    profileContainer.classList.remove("opacity-50");
+                    showError("Error loading profile", fetchCandidateProfile);
+                    console.error("Error fetching profile:", err);
+                }
+            }
+
+            // Verify Secret Code
+            async function verifySecretCode(code) {
+                try {
+                    loading.classList.remove("hidden");
+                    error.classList.add("hidden");
+
+                    const response = await fetchData("POST", `${baseUrl}/candidate/verify-code`, { code });
+                    if (!response.success || !response.verified) throw new Error(response.error || "Invalid secret code");
+
+                    enableEditing();
+                    hideModal();
+
+                    loading.classList.add("hidden");
+                } catch (err) {
+                    loading.classList.add("hidden");
+                    showNotification("Invalid secret code.", "error");
+                    console.error("Error verifying code:", err);
+                }
+            }
+
+            // Update Bio
+            async function updateBio() {
+                const bio = bioInput.value.trim();
+                if (!bio) {
+                    showNotification("Bio cannot be empty.", "error");
+                    return false;
+                }
+                if (bio.length > 500) {
+                    showNotification("Bio must be 500 characters or less.", "error");
+                    return false;
+                }
+
+                try {
+                    loading.classList.remove("hidden");
+                    error.classList.add("hidden");
+                    profileContainer.classList.add("opacity-50");
+
+                    const response = await fetchData("PUT", `${baseUrl}/candidate/profile`, { bio });
+                    if (!response.success) throw new Error(response.error || "Failed to update bio");
+
+                    candidateBio.textContent = bio;
+                    showNotification("Bio updated successfully.", "success");
+
+                    loading.classList.add("hidden");
+                    profileContainer.classList.remove("opacity-50");
+                    return true;
+                } catch (err) {
+                    loading.classList.add("hidden");
+                    profileContainer.classList.remove("opacity-50");
+                    showNotification("Failed to update bio.", "error");
+                    console.error("Error updating bio:", err);
+                    return false;
+                }
+            }
+
+            // Update Profile Photo
+            async function updateProfilePhoto(file) {
+                if (!file) return true; // No photo change, proceed
+                if (!["image/jpeg", "image/png"].includes(file.type)) {
+                    showNotification("Only JPG or PNG files are allowed.", "error");
+                    return false;
+                }
+                if (file.size > 2 * 1024 * 1024) {
+                    showNotification("Photo must be less than 2MB.", "error");
+                    return false;
+                }
+
+                try {
+                    loading.classList.remove("hidden");
+                    error.classList.add("hidden");
+                    profileContainer.classList.add("opacity-50");
+
+                    const formData = new FormData();
+                    formData.append("photo", file);
+
+                    const response = await fetchData("POST", `${baseUrl}/candidate/upload-photo`, formData, {
+                        "Content-Type": undefined
+                    });
+                    if (!response.success) throw new Error(response.error || "Failed to upload photo");
+
+                    profilePhoto.src = response.profilePhoto;
+                    showNotification("Profile photo updated successfully.", "success");
+
+                    loading.classList.add("hidden");
+                    profileContainer.classList.remove("opacity-50");
+                    return true;
+                } catch (err) {
+                    loading.classList.add("hidden");
+                    profileContainer.classList.remove("opacity-50");
+                    showNotification("Failed to upload photo.", "error");
+                    console.error("Error uploading photo:", err);
+                    return false;
+                }
+            }
+
+            // Save All Updates
+            async function saveUpdates() {
+                const bioSuccess = await updateBio();
+                const photoSuccess = await updateProfilePhoto(pendingPhotoFile);
+                if (bioSuccess && photoSuccess) {
+                    disableEditing();
+                    await fetchCandidateProfile(); // Refresh profile
+                }
+            }
+
+            // Photo Preview
+            photoInput.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (file && ["image/jpeg", "image/png"].includes(file.type)) {
+                    pendingPhotoFile = file;
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        profilePhoto.src = event.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Event Listeners
+            updateProfileBtn.addEventListener("click", showModal);
+            verifyCodeBtn.addEventListener("click", () => {
+                const code = secretCodeInput.value.trim();
+                if (!code) {
+                    showNotification("Please enter a secret code.", "error");
+                    return;
+                }
+                verifySecretCode(code);
+            });
+            cancelVerifyBtn.addEventListener("click", hideModal);
+            saveUpdatesBtn.addEventListener("click", saveUpdates);
+            cancelUpdatesBtn.addEventListener("click", async () => {
+                disableEditing();
+                await fetchCandidateProfile(); // Reset to original data
+            });
+
+            // Initial Load
+            await fetchCandidateProfile();
+        });
+    </script>
+</body>
+</html>

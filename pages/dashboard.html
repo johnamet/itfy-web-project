@@ -2,100 +2,297 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Admin Dashboard | IT FOR Youth Ghana Voting Platform</title>
-    <link href="../css/admin-dashboard-styles.css" rel="stylesheet">
-    <link href="../images/Asset-1.png" rel="shortcut icon" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | IT For Youth Ghana</title>
+    <link rel="shortcut icon" href="../../images/Asset-1.png" type="image/png">
+    <link href="https://cdn.tailwindcss.com" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/9083b7c357.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script crossorigin="anonymous" src="https://kit.fontawesome.com/9083b7c357.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#10B981',
+                        luxury: '#1F2937',
+                        gold: '#D4AF37',
+                        platinum: '#E5E7EB',
+                        accent: '#F9FAFB',
+                    },
+                    fontFamily: { inter: ['Inter', 'sans-serif'] },
+                    boxShadow: {
+                        'premium': '0 6px 20px rgba(0, 0, 0, 0.15)',
+                        'modal': '0 15px 40px rgba(0, 0, 0, 0.25)',
+                    },
+                    backgroundImage: {
+                        'gradient-premium': 'linear-gradient(135deg, #1E3A8A 0%, #10B981 100%)',
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        slideIn: {
+                            'from': { opacity: '0', transform: 'translateY(20px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            'from': { opacity: '0', transform: 'scale(0.95)' },
+                            'to': { opacity: '1', transform: 'scale(1)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .sidebar {
+            background: linear-gradient(180deg, #1F2937, #1E3A8A);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #F9FAFB;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: #10B981;
+            color: #1F2937;
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .nav-item.active {
+            background-color: #1E3A8A;
+            border-left: 4px solid #D4AF37;
+            color: #F9FAFB;
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .modal {
+            animation: fadeIn 0.3s ease-out;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+        .chart-wrapper {
+            width: 100%;
+            max-width: 100%;
+        }
+        .animate-slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        .input-label {
+            position: relative;
+        }
+        .input-label input,
+        .input-label select,
+        .input-label textarea {
+            transition: all 0.2s ease;
+        }
+        .input-label input:focus + .label-text,
+        .input-label select:focus + .label-text,
+        .input-label textarea:focus + .label-text,
+        .input-label input:not(:placeholder-shown) + .label-text,
+        .input-label select:not(:placeholder-shown) + .label-text,
+        .input-label textarea:not(:placeholder-shown) + .label-text {
+            transform: translateY(-1.5rem);
+            font-size: 0.75rem;
+            color: #10B981;
+        }
+        .label-text {
+            position: absolute;
+            top: 0.75rem;
+            left: 1rem;
+            color: #6B7280;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+    </style>
 </head>
-<body>
-<div class="dashboard-container">
-    <nav class="sidebar">
-        <div class="logo">
-            <img alt="IT FOR Youth Ghana Logo" src="../images/Asset-1.png">
-            <h2>IT FOR Youth Ghana</h2>
+<body class="bg-platinum font-inter">
+<div class="dashboard-container flex min-h-screen">
+    <!-- Sidebar -->
+    <nav class="sidebar flex-shrink-0 w-60 text-white shadow-xl transition-all duration-300">
+        <div class="logo flex items-center p-6 border-b border-gray-700/50">
+            <a href="../../index.html" class="flex items-center">
+                <img src="../../images/Asset-1.png" alt="IT For Youth Ghana Logo" class="w-10 h-10 mr-3">
+                <h2 class="text-xl font-bold tracking-tight">IT For Youth Ghana</h2>
+            </a>
         </div>
-        <ul class="nav-links">
-            <li class="active"><a href="#"><i class="fas fa-home"></i> Dashboard</a></li>
-            <li><a href="#"><i class="fas fa-vote-yea"></i> Voting</a></li>
-            <li><a href="./manage-candidates.html"><i class="fas fa-users"></i> Candidates</a></li>
-            <li><a href="#"><i class="fas fa-chart-bar"></i> Results</a></li>
-            <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
-            <li><a href="./manage-events.html"><i class="fas fa-calendar-alt"></i> Events</a></li>
-            <li><a href="./manage-category.html"><i class="fas fa-list"></i> Categories</a></li>
-            <li><a href="#"><i class="fas fa-user"></i> Users</a></li>
+        <ul class="nav-links p-4 space-y-2">
+            <li><a href="dashboard.html" class="nav-item active"><i class="fas fa-home mr-2 text-lg"></i> Dashboard</a></li>
+            <li><a href="voting.html" class="nav-item"><i class="fas fa-vote-yea mr-2 text-lg"></i> Voting</a></li>
+            <li><a href="manage-candidates.html" class="nav-item"><i class="fas fa-users mr-2 text-lg"></i> Candidates</a></li>
+            <li><a href="results.html" class="nav-item"><i class="fas fa-chart-bar mr-2 text-lg"></i> Results</a></li>
+            <li><a href="balance-board.html" class="nav-item"><i class="fas fa-wallet mr-2 text-lg"></i> Balance Board</a></li>
+            <li><a href="settings.html" class="nav-item"><i class="fas fa-cog mr-2 text-lg"></i> Settings</a></li>
+            <li><a href="manage-events.html" class="nav-item"><i class="fas fa-calendar-alt mr-2 text-lg"></i> Events</a></li>
+            <li><a href="manage-category.html" class="nav-item"><i class="fas fa-list mr-2 text-lg"></i> Categories</a></li>
+            <li><a href="manage-nominations.html" class="nav-item"><i class="fas fa-award mr-2 text-lg"></i> Nominations</a></li>
+            <li><a href="manage-users.html" class="nav-item"><i class="fas fa-user mr-2 text-lg"></i> Users</a></li>
         </ul>
     </nav>
-    <main class="main-content">
-        <header>
-            <h1>Admin Dashboard</h1>
-            <div class="user-info">
-                <img alt="Admin User" src="../images/placeholder-user.jpg">
-                <span>Admin User</span>
-                <i class="fas fa-chevron-down"></i>
+
+    <!-- Main Content -->
+    <main class="content flex-1 p-8 max-w-7xl mx-auto">
+        <header class="flex justify-between items-center mb-8 border-b border-gray-200 pb-4">
+            <h1 class="text-5xl font-extrabold text-luxury tracking-tight">Admin Dashboard</h1>
+            <div class="user-info flex items-center">
+                <img src="../../images/profile-placeholder.png" alt="Profile" class="w-10 h-10 rounded-full mr-3">
+                <div>
+                    <p class="text-luxury font-medium">Admin User</p>
+                    <button id="profileBtn" class="text-secondary hover:text-primary"><i class="fas fa-chevron-down"></i></button>
+                </div>
             </div>
         </header>
-        <div class="dashboard-grid">
-            <section class="quick-stats">
-                <div class="stat-card">
-                    <i class="fas fa-users"></i>
-                    <div>
-                        <h3>Total Users</h3>
-                        <p id="totalUsers">Loading...</p>
+
+        <!-- Notification -->
+        <div id="notification" class="fixed top-6 right-6 hidden z-50 bg-luxury/90 text-white p-4 rounded-full shadow-premium flex items-center space-x-4">
+            <span id="notificationMessage" class="font-medium"></span>
+            <button id="closeNotification" class="text-white hover:text-gold"><i class="fas fa-times"></i></button>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="text-center text-luxury mb-8 animate-pulse-slow">
+            <i class="fas fa-spinner fa-spin text-3xl"></i>
+            <p class="mt-2 font-medium">Loading data...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="hidden text-center text-red-600 mb-8 font-medium"></div>
+
+        <!-- Dashboard Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- Quick Stats -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <h2 class="text-xl font-semibold text-primary mb-4">Quick Stats</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="stat-card bg-platinum p-4 rounded-lg shadow-sm flex items-center space-x-4">
+                        <i class="fas fa-users text-primary text-2xl"></i>
+                        <div>
+                            <p class="text-gray-600 text-sm">Total Users</p>
+                            <p id="totalUsers" class="text-lg font-semibold text-luxury">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="stat-card bg-platinum p-4 rounded-lg shadow-sm flex items-center space-x-4">
+                        <i class="fas fa-vote-yea text-primary text-2xl"></i>
+                        <div>
+                            <p class="text-gray-600 text-sm">Total Votes</p>
+                            <p id="totalVotes" class="text-lg font-semibold text-luxury">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="stat-card bg-platinum p-4 rounded-lg shadow-sm flex items-center space-x-4">
+                        <i class="fas fa-calendar-alt text-primary text-2xl"></i>
+                        <div>
+                            <p class="text-gray-600 text-sm">Active Events</p>
+                            <p id="activeEvents" class="text-lg font-semibold text-luxury">Loading...</p>
+                        </div>
+                    </div>
+                    <div class="stat-card bg-platinum p-4 rounded-lg shadow-sm flex items-center space-x-4">
+                        <i class="fas fa-user-tie text-primary text-2xl"></i>
+                        <div>
+                            <p class="text-gray-600 text-sm">Candidates</p>
+                            <p id="totalCandidates" class="text-lg font-semibold text-luxury">Loading...</p>
+                        </div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-vote-yea"></i>
-                    <div>
-                        <h3>Total Votes</h3>
-                        <p id="totalVotes">Loading...</p>
-                    </div>
+            </div>
+
+            <!-- Voting Statistics -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-semibold text-primary">Voting Statistics</h2>
+                    <select id="voteFilter" class="p-2 rounded-lg bg-platinum shadow-sm focus:ring-0 focus:shadow-md text-sm">
+                        <option value="all">All Time</option>
+                        <option value="week">Last Week</option>
+                        <option value="month">Last Month</option>
+                    </select>
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-calendar-check"></i>
-                    <div>
-                        <h3>Active Events</h3>
-                        <p id="activeEvents">Loading...</p>
-                    </div>
+                <div class="chart-wrapper">
+                    <canvas id="votingStatsChart" class="w-full max-w-full" style="height: 300px;"></canvas>
                 </div>
-                <div class="stat-card">
-                    <i class="fas fa-user-tie"></i>
-                    <div>
-                        <h3>Candidates</h3>
-                        <p id="totalCandidates">Loading...</p>
-                    </div>
+            </div>
+
+            <!-- User Growth -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <h2 class="text-xl font-semibold text-primary mb-4">User Growth</h2>
+                <div class="chart-wrapper">
+                    <canvas id="userGrowthChart" class="w-full max-w-full" style="height: 300px;"></canvas>
                 </div>
-            </section>
-            <section class="chart-container">
-                <h3>Voting Statistics</h3>
-                <canvas id="votesChart"></canvas>
-            </section>
-            <section class="chart-container">
-                <h3>User Growth</h3>
-                <canvas id="usersChart"></canvas>
-            </section>
-            <section class="chart-container">
-                <h3>Event Participation</h3>
-                <canvas id="eventsChart"></canvas>
-            </section>
-            <section class="recent-activity">
-                <h3>Recent Activity</h3>
-                <ul id="activityList">
-                    <!-- Activity items will be dynamically added here -->
-                </ul>
-            </section>
-            <section class="upcoming-events">
-                <h3>Upcoming Events</h3>
-                <ul id="upcomingEventsList">
-                    <!-- Upcoming events will be dynamically added here -->
-                </ul>
-            </section>
+            </div>
+
+            <!-- Event Participation -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <h2 class="text-xl font-semibold text-primary mb-4">Event Participation</h2>
+                <div class="chart-wrapper">
+                    <canvas id="eventParticipationChart" class="w-full max-w-full" style="height: 300px;"></canvas>
+                </div>
+            </div>
+
+            <!-- Top Performers -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <h2 class="text-xl font-semibold text-primary mb-4">Top Performers</h2>
+                <div class="chart-wrapper">
+                    <canvas id="topPerformersChart" class="w-full max-w-full" style="height: 300px;"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <h2 class="text-xl font-semibold text-primary mb-4">Recent Activity</h2>
+                <ul id="recentActivity" class="space-y-2"></ul>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="bg-white/90 p-6 rounded-lg shadow-premium animate-slide-in">
+                <h2 class="text-xl font-semibold text-primary mb-4">Upcoming Events</h2>
+                <ul id="upcomingEvents" class="space-y-2"></ul>
+            </div>
+        </div>
+
+        <!-- User Profile Modal -->
+        <div id="profileModal" class="fixed inset-0 bg-luxury/75 hidden flex items-center justify-center z-50">
+            <div class="bg-white/90 p-8 rounded-lg shadow-modal w-full max-w-xl modal">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold text-luxury">Profile Settings</h2>
+                    <button id="closeProfileModal" class="text-luxury hover:text-gold"><i class="fas fa-times text-xl"></i></button>
+                </div>
+                <form id="profileForm" class="space-y-6">
+                    <div class="input-label">
+                        <input type="text" id="username" name="username" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " value="Admin User">
+                        <span class="label-text">Username</span>
+                    </div>
+                    <div class="input-label">
+                        <input type="email" id="email" name="email" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" " value="admin@example.com">
+                        <span class="label-text">Email</span>
+                    </div>
+                    <div class="input-label">
+                        <input type="file" id="profilePhoto" name="profilePhoto" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm">
+                        <span class="label-text">Profile Photo</span>
+                    </div>
+                    <div class="input-label">
+                        <input type="password" id="password" name="password" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" ">
+                        <span class="label-text">New Password</span>
+                    </div>
+                    <button type="submit" class="btn bg-gradient-premium text-white font-semibold py-3 px-6 rounded-full shadow-premium w-full">Save Changes</button>
+                </form>
+                <button type="button" id="logoutBtn" class="btn bg-gold text-luxury font-semibold py-3 px-6 rounded-full shadow-premium w-full mt-4">Logout</button>
+            </div>
         </div>
     </main>
 </div>
-<script src="../js/dashboard.js"></script>
+<script type="module" src="../js/dashboard.js"></script>
 </body>
 </html>

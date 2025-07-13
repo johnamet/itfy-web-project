@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balance Board | IT For Youth Ghana</title>
+    <link rel="shortcut icon" href="../../images/Asset-1.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9083b7c357.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#10B981',
+                        luxury: '#1F2937',
+                        gold: '#D4AF37',
+                        platinum: '#E5E7EB',
+                        accent: '#F9FAFB',
+                    },
+                    fontFamily: { inter: ['Inter', 'sans-serif'] },
+                    boxShadow: {
+                        'premium': '0 6px 20px rgba(0, 0, 0, 0.15)',
+                        'modal': '0 15px 40px rgba(0, 0, 0, 0.25)',
+                    },
+                    backgroundImage: {
+                        'gradient-premium': 'linear-gradient(135deg, #1E3A8A 0%, #10B981 100%)',
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        slideIn: {
+                            'from': { opacity: '0', transform: 'translateY(20px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            'from': { opacity: '0', transform: 'scale(0.95)' },
+                            'to': { opacity: '1', transform: 'scale(1)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .sidebar {
+            background: linear-gradient(180deg, #1F2937, #1E3A8A);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #F9FAFB;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: #10B981;
+            color: #1F2937;
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .nav-item.active {
+            background-color: #1E3A8A;
+            border-left: 4px solid #D4AF37;
+            color: #F9FAFB;
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .input-label {
+            position: relative;
+        }
+        .input-label input,
+        .input-label select {
+            transition: all 0.2s ease;
+        }
+        .input-label input:focus + .label-text,
+        .input-label select:focus + .label-text,
+        .input-label input:not(:placeholder-shown) + .label-text,
+        .input-label select:not(:placeholder-shown) + .label-text {
+            transform: translateY(-1.5rem);
+            font-size: 0.75rem;
+            color: #10B981;
+        }
+        .label-text {
+            position: absolute;
+            top: 0.75rem;
+            left: 1rem;
+            color: #6B7280;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+        .chart-wrapper {
+            width: 100%;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-platinum font-inter">
+<div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <nav class="sidebar flex-shrink-0 w-60 text-white shadow-xl transition-all duration-300">
+        <div class="logo flex items-center p-6 border-b border-gray-700/50">
+            <a href="../../index.html" class="flex items-center">
+                <img src="../../images/Asset-1.png" alt="IT For Youth Ghana Logo" class="w-10 h-10 mr-3">
+                <h2 class="text-xl font-bold tracking-tight">IT For Youth Ghana</h2>
+            </a>
+        </div>
+        <ul class="nav-links p-4 space-y-2">
+            <li><a href="../dashboard.html" class="nav-item"><i class="fas fa-home mr-2 text-lg"></i> Dashboard</a></li>
+            <li><a href="voting.html" class="nav-item"><i class="fas fa-vote-yea mr-2 text-lg"></i> Voting</a></li>
+            <li><a href="manage-candidates.html" class="nav-item"><i class="fas fa-users mr-2 text-lg"></i> Candidates</a></li>
+            <li><a href="results.html" class="nav-item"><i class="fas fa-chart-bar mr-2 text-lg"></i> Results</a></li>
+            <li><a href="balance-board.html" class="nav-item active"><i class="fas fa-wallet mr-2 text-lg"></i> Balance Board</a></li>
+            <li><a href="settings.html" class="nav-item"><i class="fas fa-cog mr-2 text-lg"></i> Settings</a></li>
+            <li><a href="manage-events.html" class="nav-item"><i class="fas fa-calendar-alt mr-2 text-lg"></i> Events</a></li>
+            <li><a href="manage-category.html" class="nav-item"><i class="fas fa-list mr-2 text-lg"></i> Categories</a></li>
+            <li><a href="manage-nominations.html" class="nav-item"><i class="fas fa-award mr-2 text-lg"></i> Nominations</a></li>
+            <li><a href="manage-users.html" class="nav-item"><i class="fas fa-user mr-2 text-lg"></i> Users</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8 max-w-7xl mx-auto">
+        <header class="flex justify-between items-center mb-8 border-b border-gray-200 pb-4">
+            <h1 class="text-3xl font-bold text-luxury">Balance Board</h1>
+            <div class="input-label w-64">
+                <select id="eventSelector" class="w-full p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm" placeholder=" ">
+                    <option value="">Select an Event</option>
+                    <!-- Event options will be populated dynamically -->
+                </select>
+                <span class="label-text">Event</span>
+            </div>
+        </header>
+
+        <!-- Notification -->
+        <div id="notification" class="fixed top-6 right-6 hidden z-50 bg-luxury/90 text-white p-4 rounded-full shadow-premium flex items-center space-x-4">
+            <span id="notificationMessage" class="font-medium"></span>
+            <button id="closeNotification" class="text-white hover:text-gold"><i class="fas fa-times"></i></button>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="text-center text-luxury mb-8 animate-pulse-slow">
+            <i class="fas fa-spinner fa-spin text-3xl"></i>
+            <p class="mt-2 font-medium">Loading data...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="hidden text-center text-red-600 mb-8 font-medium"></div>
+
+        <!-- Summary Container -->
+        <section id="summary-container" class="bg-white/90 p-6 rounded-lg shadow-premium mb-8 animate-slide-in backdrop-blur-md">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Summary</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold text-luxury mb-2">Total Balance</h3>
+                    <p id="total-balance-amount" class="text-2xl font-bold text-primary">GHS0.00</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold text-luxury mb-2">Total Transactions</h3>
+                    <p id="total-transactions-count" class="text-2xl font-bold text-primary">0 Transactions</p>
+                </div>
+            </div>
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold text-primary mb-2">Balance & Transactions by Event</h3>
+                <div class="chart-wrapper">
+                    <canvas id="balanceChart" class="w-full max-w-full" style="height: 300px;"></canvas>
+                </div>
+            </div>
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold text-primary mb-2">Events List</h3>
+                <div id="events-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            </div>
+        </section>
+
+        <!-- Event Details Container -->
+        <section id="event-details-container" class="bg-white/90 p-6 rounded-lg shadow-premium hidden mb-8 animate-slide-in backdrop-blur-md">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Event Details</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold text-luxury mb-2">Event Balance</h3>
+                    <p id="event-balance-amount" class="text-2xl font-bold text-primary">GHS0.00</p>
+                    <p id="event-transactions-count" class="text-sm text-gray-600">0 Transactions</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold text-luxury mb-2">Category Costs</h3>
+                    <ul id="category-costs-list" class="list-disc pl-5 text-sm text-gray-600"></ul>
+                </div>
+            </div>
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold text-primary mb-2">Category Distribution</h3>
+                <div class="chart-wrapper">
+                    <canvas id="categoryDistributionChart" class="w-full max-w-full" style="height: 300px;"></canvas>
+                </div>
+            </div>
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold text-primary mb-2">Transaction History</h3>
+                <div class="chart-wrapper">
+                    <canvas id="transactionChart" class="w-full max-w-full" style="height: 300px;"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Payment List Container -->
+        <section id="payment-list-container" class="bg-white/90 p-6 rounded-lg shadow-premium hidden mb-8 animate-slide-in backdrop-blur-md">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Payments</h2>
+            <div id="payment-list" class="space-y-4"></div>
+        </section>
+
+        <!-- Payment Details Container -->
+        <section id="payment-details-container" class="bg-white/90 p-6 rounded-lg shadow-premium hidden mb-8 animate-slide-in backdrop-blur-md">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Payment Details</h2>
+            <!-- Payment details will be populated dynamically -->
+        </section>
+
+        <!-- Vote Bundle Details Container -->
+        <section id="vote-bundle-details-container" class="bg-white/90 p-6 rounded-lg shadow-premium hidden mb-8 animate-slide-in backdrop-blur-md">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Vote Bundle Details</h2>
+            <!-- Vote bundle details will be populated dynamically -->
+        </section>
+    </main>
+</div>
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script type="module" src="../../js/balance-board.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'93900a9d0b5ebd4e',t:'MTc0NjExMDUwNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+</body>
+</html>

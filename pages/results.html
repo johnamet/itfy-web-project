@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting Results | IT For Youth Ghana</title>
+    <link rel="shortcut icon" href="../../images/Asset-1.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/9083b7c357.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#10B981',
+                        luxury: '#1F2937',
+                        gold: '#D4AF37',
+                        platinum: '#E5E7EB',
+                        accent: '#F9FAFB',
+                    },
+                    fontFamily: { inter: ['Inter', 'sans-serif'] },
+                    boxShadow: {
+                        'premium': '0 6px 20px rgba(0, 0, 0, 0.15)',
+                        'modal': '0 15px 40px rgba(0, 0, 0, 0.25)',
+                    },
+                    backgroundImage: {
+                        'gradient-premium': 'linear-gradient(135deg, #1E3A8A 0%, #10B981 100%)',
+                    },
+                    animation: {
+                        'slide-in': 'slideIn 0.5s ease-out',
+                        'fade-in': 'fadeIn 0.3s ease-out',
+                        'pulse-slow': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        slideIn: {
+                            'from': { opacity: '0', transform: 'translateY(20px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            'from': { opacity: '0', transform: 'scale(0.95)' },
+                            'to': { opacity: '1', transform: 'scale(1)' },
+                        },
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        .sidebar {
+            background: linear-gradient(180deg, #1F2937, #1E3A8A);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #F9FAFB;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: #10B981;
+            color: #1F2937;
+            transform: scale(1.02);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .nav-item.active {
+            background-color: #1E3A8A;
+            border-left: 4px solid #D4AF37;
+            color: #F9FAFB;
+        }
+        .btn {
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .table-responsive {
+            width: 100%;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-platinum font-inter">
+<div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <nav class="sidebar flex-shrink-0 w-60 text-white shadow-xl transition-all duration-300">
+        <div class="logo flex items-center p-6 border-b border-gray-700/50">
+            <a href="../../index.html" class="flex items-center">
+                <img src="../../images/Asset-1.png" alt="IT For Youth Ghana Logo" class="w-10 h-10 mr-3">
+                <h2 class="text-xl font-bold tracking-tight">IT For Youth Ghana</h2>
+            </a>
+        </div>
+        <ul class="nav-links p-4 space-y-2">
+            <li><a href="../dashboard.html" class="nav-item"><i class="fas fa-home mr-2 text-lg"></i> Dashboard</a></li>
+            <li><a href="voting.html" class="nav-item"><i class="fas fa-vote-yea mr-2 text-lg"></i> Voting</a></li>
+            <li><a href="manage-candidates.html" class="nav-item"><i class="fas fa-users mr-2 text-lg"></i> Candidates</a></li>
+            <li><a href="results.html" class="nav-item active"><i class="fas fa-chart-bar mr-2 text-lg"></i> Results</a></li>
+            <li><a href="balance-board.html" class="nav-item"><i class="fas fa-wallet mr-2 text-lg"></i> Balance Board</a></li>
+            <li><a href="settings.html" class="nav-item"><i class="fas fa-cog mr-2 text-lg"></i> Settings</a></li>
+            <li><a href="manage-events.html" class="nav-item"><i class="fas fa-calendar-alt mr-2 text-lg"></i> Events</a></li>
+            <li><a href="manage-category.html" class="nav-item"><i class="fas fa-list mr-2 text-lg"></i> Categories</a></li>
+            <li><a href="manage-nominations.html" class="nav-item"><i class="fas fa-award mr-2 text-lg"></i> Nominations</a></li>
+            <li><a href="manage-users.html" class="nav-item"><i class="fas fa-user mr-2 text-lg"></i> Users</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-8 max-w-7xl mx-auto">
+        <header class="flex justify-between items-center mb-8 border-b border-gray-200 pb-4">
+            <h1 class="text-3xl font-bold text-luxury">Voting Results</h1>
+            <select id="eventSelector" class="p-3 rounded-lg bg-platinum focus:ring-0 focus:shadow-sm">
+                <option value="">Select an Event</option>
+                <!-- Event options will be dynamically added here -->
+            </select>
+        </header>
+
+        <!-- Notification -->
+        <div id="notification" class="fixed top-6 right-6 hidden z-50 bg-luxury/90 text-white p-4 rounded-full shadow-premium flex items-center space-x-4">
+            <span id="notificationMessage" class="font-medium"></span>
+            <button id="closeNotification" class="text-white hover:text-gold"><i class="fas fa-times"></i></button>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="text-center text-gray-600 mb-8">
+            <i class="fas fa-spinner fa-spin text-2xl"></i>
+            <p>Loading results...</p>
+        </div>
+
+        <!-- Error State -->
+        <div id="error" class="hidden text-center text-red-600 mb-8"></div>
+
+        <!-- Results Container -->
+        <section id="results-container" class="space-y-8 hidden animate-fade-in"></section>
+    </main>
+</div>
+<script type="module" src="../../js/results.js"></script>
+<script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</body>
+</html>
